@@ -10,3 +10,4 @@ next-env.d.ts
 .mount-test
 .bridge
 .claude/settings.local.json
+/kevinandrew-site/

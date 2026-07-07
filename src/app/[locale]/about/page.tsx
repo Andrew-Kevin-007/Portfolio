@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 
 export async function generateMetadata({
@@ -12,12 +13,12 @@ export async function generateMetadata({
   return { title: t("about") };
 }
 
-const FIELDWORK = [
-  { org: "BlueStock", domain: "fintech" },
-  { org: "Smartbridge × Google", domain: "generative AI" },
-  { org: "Raditon Intelligence", domain: "applied AI" },
-  { org: "Infosys Springboard", domain: "SaaS" },
-];
+const STOPS = [
+  { key: "stop1", org: "Edith Studio", href: "/studio" },
+  { key: "stop2", org: "Bluestock" },
+  { key: "stop3", org: "SmartBridge × Google" },
+  { key: "stop4", org: "Radiant Intelligence" },
+] as const;
 
 export default async function AboutPage({
   params,
@@ -36,59 +37,105 @@ export default async function AboutPage({
           {tn("about")}
           <span className="text-text-3">.</span>
         </h1>
-        <p className="mt-6 max-w-[58ch] text-lede text-text-2">{t("short")}</p>
+        <p className="mt-6 max-w-[58ch] text-lede text-text-2">
+          {t.rich("short", { b: (chunks) => <strong>{chunks}</strong> })}
+        </p>
       </header>
 
-      {/* How I work — keynote stanzas, not cards */}
+      {/* How I work — one throughline story, not cards */}
       <section className="mt-24">
         <Reveal>
-          <p className="text-monosm uppercase text-text-3">{t("howLabel")}</p>
+          <h3 className="max-w-[18ch] text-heading text-text-1">
+            {t("howHeading")}
+            <span className="text-text-3">.</span>
+          </h3>
         </Reveal>
-        <div className="mt-8 space-y-14">
-          {([1, 2, 3] as const).map((n, i) => (
-            <Reveal key={n} delay={i * 0.05}>
+        <div className="mt-8 space-y-6">
+          <Reveal delay={0.06}>
+            <p className="max-w-[58ch] text-bodylg text-text-2">
+              {t("how1")}
+            </p>
+          </Reveal>
+          <Reveal delay={0.09}>
+            <p className="max-w-[58ch] text-bodylg text-text-2">
+              {t.rich("how2", {
+                studio: (chunks) => (
+                  <Link href="/studio" className="text-intel">
+                    {chunks}
+                  </Link>
+                ),
+              })}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <Link
+              href="/work/etch"
+              className="group my-2 flex items-center justify-between gap-6 border-y border-hairline py-6 transition-colors duration-300 hover:border-hairline-strong"
+            >
+              <span className="max-w-[52ch] text-title text-text-1 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+                {t("how3")}
+              </span>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden
+                className="shrink-0 text-text-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-text-1"
+              >
+                <path
+                  d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                  stroke="currentColor"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <p className="max-w-[58ch] text-bodylg text-text-2">
+              {t("how4")}
+            </p>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <p className="max-w-[58ch] text-bodylg text-text-2">
+              {t("how5")}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Rooms — a timeline of stops, not an abstraction */}
+      <section className="mt-24">
+        <Reveal>
+          <h3 className="max-w-[18ch] text-heading text-text-1">
+            {t("roomsHeading")}
+            <span className="text-text-3">.</span>
+          </h3>
+        </Reveal>
+
+        <div className="mt-10 space-y-10">
+          {STOPS.map((s, i) => (
+            <Reveal key={s.key} delay={0.06 + i * 0.05}>
               <div>
-                <h3 className="max-w-[20ch] text-title">
-                  {t(`how${n}t`)}
-                  <span className="text-text-3">.</span>
-                </h3>
-                <p className="mt-3 max-w-[52ch] text-bodylg text-text-2">
-                  {t(`how${n}b`)}
+                <h4 className="text-title text-text-1">
+                  {"href" in s ? (
+                    <Link href={s.href} className="whitespace-nowrap text-intel">
+                      {s.org}
+                    </Link>
+                  ) : (
+                    <span className="whitespace-nowrap">{s.org}</span>
+                  )}
+                </h4>
+                <p className="mt-2 max-w-[56ch] text-bodylg text-text-2">
+                  {t(`${s.key}Body`)}
                 </p>
               </div>
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      {/* Rooms — leadership, worn lightly */}
-      <section className="mt-24">
-        <Reveal>
-          <p className="text-monosm uppercase text-text-3">{t("roomsLabel")}</p>
-          <p className="mt-8 max-w-[56ch] text-bodylg text-text-2">
-            {t.rich("rooms", { b: (chunks) => <strong>{chunks}</strong> })}
-          </p>
-        </Reveal>
-      </section>
-
-      {/* Fieldwork */}
-      <section className="mt-24">
-        <Reveal>
-          <p className="mb-1 text-monosm uppercase text-text-3">
-            {t("fieldworkLabel")}
-          </p>
-          <p className="mb-4 text-meta text-text-2">{t("fieldworkNote")}</p>
-        </Reveal>
-        <div>
-          {FIELDWORK.map((f, i) => (
-            <Reveal key={f.org} delay={i * 0.04}>
-              <div className="flex items-baseline justify-between gap-6 border-t border-hairline py-4">
-                <span className="text-body text-text-1">{f.org}</span>
-                <span className="text-monosm text-text-3">{f.domain}</span>
-              </div>
-            </Reveal>
-          ))}
-          <div className="border-t border-hairline" />
         </div>
       </section>
 

@@ -7,10 +7,10 @@ import { Doors } from "@/components/sections/Doors";
 
 /**
  * Home — one narrative line, one dark room throughout, no competing
- * sections: hero → highlights (the three flagship case studies) → the loop
- * → the featured film docking into hardware → the rooms (each carrying its
- * own live thread) → outro. Writing has its own page and isn't duplicated
- * here.
+ * sections: hero → the loop (the operating philosophy) → the featured film
+ * docking into hardware → the rooms (each carrying its own live thread) →
+ * highlights ("for the nerds" — the blog aside) → outro. Writing has its
+ * own page and isn't duplicated here.
  */
 export default async function HomePage({
   params,
@@ -23,10 +23,10 @@ export default async function HomePage({
   return (
     <>
       <Hero />
-      <Highlights />
       <Manifesto />
       <FeaturedDock />
       <Doors />
+      <Highlights />
     </>
   );
 }
