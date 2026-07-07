@@ -51,6 +51,8 @@
     "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-mono-loaded), "JetBrains Mono", ui-monospace,
     SFMono-Regular, Menlo, monospace;
+  --font-script: var(--font-script-loaded), "Segoe Script", "Snell Roundhand",
+    "Brush Script MT", cursive;
 }
 
 /* ---------- type scale (fluid) ---------- */

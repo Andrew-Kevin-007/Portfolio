@@ -17,7 +17,7 @@ export async function Footer() {
               {NAME}
               <span className="text-text-3">.</span>
             </p>
-            <SocialIcons className="-ml-2.5" />
+            <SocialIcons className="-ml-2.5" hoverEffect={false} />
           </div>
 
           <div className="flex gap-14">

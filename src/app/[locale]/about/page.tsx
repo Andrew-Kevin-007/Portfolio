@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
+import { Expander } from "@/components/motion/Expander";
+import { EmailCopy } from "@/components/shell/EmailCopy";
 
 export async function generateMetadata({
   params,
@@ -17,7 +19,21 @@ const STOPS = [
   { key: "stop1", org: "Edith Studio", href: "/studio" },
   { key: "stop2", org: "Bluestock" },
   { key: "stop3", org: "SmartBridge × Google" },
-  { key: "stop4", org: "Radiant Intelligence" },
+  { key: "stop4", org: "Raditon Intelligence" },
+] as const;
+
+const EXPECT_NOTICES = [
+  "expectNotice1",
+  "expectNotice2",
+  "expectNotice3",
+  "expectNotice4",
+  "expectNotice5",
+] as const;
+
+const AFTER_HOURS_GIFS = [
+  "/gifs/juventus.gif",
+  "/gifs/art-create.gif",
+  "/gifs/beer-reaction.gif",
 ] as const;
 
 export default async function AboutPage({
@@ -117,7 +133,7 @@ export default async function AboutPage({
           </h3>
         </Reveal>
 
-        <div className="mt-10 space-y-10">
+        <div className="mt-8 space-y-6">
           {STOPS.map((s, i) => (
             <Reveal key={s.key} delay={0.06 + i * 0.05}>
               <div>
@@ -130,7 +146,7 @@ export default async function AboutPage({
                     <span className="whitespace-nowrap">{s.org}</span>
                   )}
                 </h4>
-                <p className="mt-2 max-w-[56ch] text-bodylg text-text-2">
+                <p className="mt-1.5 max-w-[56ch] text-bodylg text-text-2">
                   {t(`${s.key}Body`)}
                 </p>
               </div>
@@ -139,29 +155,133 @@ export default async function AboutPage({
         </div>
       </section>
 
-      {/* Elsewhere */}
+      {/* What you can expect — heading, full-width paragraph, then two
+          columns: the tells on the left, the contact block on the right */}
       <section className="mt-24">
         <Reveal>
-          <p className="mb-4 text-monosm uppercase text-text-3">
-            {t("elsewhereLabel")}
+          <h3 className="max-w-[20ch] text-heading text-text-1">
+            {t("expectHeading")}
+            <span className="text-text-3">.</span>
+          </h3>
+        </Reveal>
+
+        <Reveal delay={0.04}>
+          <p className="mt-8 max-w-[62ch] text-bodylg text-text-2">
+            {t("expectBody")}
           </p>
         </Reveal>
-        <div className="space-y-3">
-          {(["el1", "el2", "el3"] as const).map((k, i) => (
-            <Reveal key={k} delay={i * 0.05}>
-              <p className="max-w-[56ch] text-bodylg text-text-2">{t(k)}</p>
+
+        <div className="mt-14 grid gap-10 sm:grid-cols-2 sm:gap-16">
+          <Reveal delay={0.08}>
+            <div>
+              <h4 className="text-title text-text-1">
+                {t("expectNoticeIntro")}
+              </h4>
+              <ul className="mt-5 space-y-3">
+                {EXPECT_NOTICES.map((k, i) => (
+                  <li
+                    key={k}
+                    className="flex items-baseline gap-3 text-body text-text-2"
+                  >
+                    <span className="text-monosm text-text-3">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{t(k)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <div className="border-l border-hairline pl-8 sm:pl-10">
+              <p className="text-title text-text-1">
+                {t("expectContactLabel")}
+              </p>
+              <div className="mt-5">
+                <EmailCopy />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* After Hours — looser rhythm on purpose: this is the section that's
+          allowed to feel like a person instead of a résumé */}
+      <section className="mt-24">
+        <Reveal>
+          <h3 className="max-w-[16ch] text-heading text-text-1">
+            {t("afterHoursHeading")}
+            <span className="text-text-3">.</span>
+          </h3>
+        </Reveal>
+        <Reveal delay={0.03}>
+          <p className="mt-4 max-w-[52ch] text-title text-text-1">
+            {t("afterHoursTag")}
+          </p>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <p className="mt-4 max-w-[60ch] text-bodylg text-text-2">
+            {t("afterHoursBody")}
+          </p>
+        </Reveal>
+
+        <div className="mt-10 flex flex-wrap gap-4 sm:gap-5">
+          {AFTER_HOURS_GIFS.map((src, i) => (
+            <Reveal key={src} delay={0.1 + i * 0.04}>
+              <div className="group h-24 w-24 shrink-0 overflow-hidden border border-hairline transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 sm:h-28 sm:w-28">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt=""
+                  aria-hidden
+                  className="h-full w-full object-cover grayscale transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0"
+                />
+              </div>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Trajectory */}
-      <section className="mt-24">
+      {/* Outro — the page closes quietly, tucked behind a note instead of
+          shouting on the way out */}
+      <section className="mt-24 mb-4">
         <Reveal>
-          <p className="mb-4 text-monosm uppercase text-text-3">
-            {t("trajectoryLabel")}
-          </p>
-          <p className="text-monosm text-text-2">{t("trajectory")}</p>
+          <h3 className="max-w-[18ch] text-heading text-text-1">
+            {t("outroHeading")}
+            <span className="text-text-3">.</span>
+          </h3>
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <div className="mt-8">
+            <Expander
+              label={t("outroButtonLabel")}
+              openLabel={t("outroButtonOpenLabel")}
+            >
+              <div className="max-w-[56ch]">
+                <p className="text-bodylg leading-relaxed text-text-2">
+                  {t.rich("outroBody", {
+                    i: (chunks) => <em className="italic">{chunks}</em>,
+                    b: (chunks) => <strong>{chunks}</strong>,
+                  })}
+                </p>
+                <p className="mt-7 text-heading italic text-text-1">
+                  {t("outroSeeYou")}
+                </p>
+                <div className="mt-6 flex items-end gap-4">
+                  <span className="pb-2 text-title font-medium text-text-3">
+                    —
+                  </span>
+                  <span className="font-script text-[clamp(3.25rem,10vw,5.25rem)] leading-[0.8] text-text-1 opacity-60">
+                    {t("outroSign")}
+                  </span>
+                </div>
+                <p className="mt-6 text-monosm lowercase tracking-wide text-text-3">
+                  {t("outroPs")}
+                </p>
+              </div>
+            </Expander>
+          </div>
         </Reveal>
       </section>
     </div>
