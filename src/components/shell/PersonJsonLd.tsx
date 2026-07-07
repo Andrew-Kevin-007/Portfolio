@@ -1,20 +1,43 @@
-import { NAME, SITE_URL, EMAIL, SOCIAL } from "@/content/site";
+import { NAME, SITE_URL, EMAIL, SOCIAL, STUDIO_URL } from "@/content/site";
 
-/** Person schema — server-rendered, single source of truth from site.ts */
+/**
+ * Structured data — server-rendered, single source of truth from site.ts.
+ * Person (who) + WebSite (what this domain is), linked by @id so crawlers
+ * read them as one graph.
+ */
 export function PersonJsonLd() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: NAME,
-    url: SITE_URL,
-    email: `mailto:${EMAIL}`,
-    sameAs: [SOCIAL.github, SOCIAL.linkedin],
-    knowsAbout: [
-      "Cloud Infrastructure",
-      "Distributed Systems",
-      "Cryptographic Protocols",
-      "Applied AI",
-      "DevOps",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: NAME,
+        url: SITE_URL,
+        email: `mailto:${EMAIL}`,
+        jobTitle: "Software Engineer",
+        worksFor: {
+          "@type": "Organization",
+          name: "Edith Studio",
+          url: STUDIO_URL,
+        },
+        sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.x, SOCIAL.instagram],
+        knowsAbout: [
+          "Cloud Infrastructure",
+          "Distributed Systems",
+          "Cryptographic Protocols",
+          "Applied AI",
+          "DevOps",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: NAME,
+        url: SITE_URL,
+        inLanguage: ["en", "de"],
+        publisher: { "@id": `${SITE_URL}/#person` },
+      },
     ],
   };
   return (

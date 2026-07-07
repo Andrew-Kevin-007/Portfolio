@@ -20,9 +20,10 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     }
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 1.25,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       touchMultiplier: isTouch ? 1 : 1.6,
+      anchors: true,
     });
     window.__lenis = lenis;
 

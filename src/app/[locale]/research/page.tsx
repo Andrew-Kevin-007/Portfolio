@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -10,7 +11,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("research") };
+  const tm = await getTranslations({ locale, namespace: "pageMeta" });
+  return {
+    title: t("research"),
+    description: tm("research"),
+    alternates: localeAlternates(locale, "/research"),
+  };
 }
 
 const OPEN_QUESTIONS = [

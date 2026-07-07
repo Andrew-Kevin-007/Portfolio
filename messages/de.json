@@ -3,6 +3,13 @@
     "title": "Kevin Andrew — leise Systeme für laute Probleme",
     "description": "Kevin Andrew entwickelt Cloud-Infrastruktur, Protokolle und angewandte KI — von Grundprinzipien aus gedacht und vollständig umgesetzt."
   },
+  "pageMeta": {
+    "research": "Formale Forschung zu Code-Provenienz und Cloud-Ressourcen-Allokation — die Probleme, der Ansatz und die offenen Fragen hinter den Papern.",
+    "studio": "Edith Studio — eine kleine Design- und Engineering-Praxis von Kevin Andrew. Produkte und KI-Systeme, die einfach funktionieren, vollständig umgesetzt.",
+    "writing": "Essays und Notizen von Kevin Andrew — über das Bauen, das Werden und die Lücke zwischen dem, wer du bist, und dem, was du baust.",
+    "about": "Kevin Andrew — Ingenieur, Gründer von Edith Studio und Forscher. Eine Neugier, die nie stillsteht: bauen, schreiben und Ideen vollständig verfolgen.",
+    "contact": "Kontakt zu Kevin Andrew — Kundenarbeit, Forschung, Zusammenarbeit oder einfach nur Hallo sagen. Antwort meist innerhalb eines Tages."
+  },
   "nav": {
     "work": "Arbeit",
     "research": "Forschung",
@@ -19,9 +26,7 @@
   "footer": {
     "rights": "© 2026 Kevin Andrew",
     "built": "von Hand entworfen & gebaut",
-    "cv": "Lebenslauf",
-    "email": "E-Mail",
-    "elsewhere": "Anderswo"
+    "cv": "Lebenslauf"
   },
   "home": {
     "heroL1": "Hey,",
@@ -43,15 +48,7 @@
     "doorsResearchBody": "Manche Probleme brauchen mehr als Code. Formale Arbeit zu Provenienz und Ressourcen-Allokation — und die offenen Fragen dahinter.",
     "doorsStudioTitle": "Studio",
     "doorsStudioBody": "Eine kleine Praxis für Menschen, die Systeme brauchen, die einfach funktionieren. Ausgewählte Kundenarbeit, und wie sie läuft.",
-    "readMore": "Mehr lesen",
-    "writingTitle": "Texte",
-    "writingAll": "Alle Texte",
-    "nowTitle": "Gerade",
-    "now1l": "protokoll",
-    "now1": "Ich baue <b>Etch</b> — kryptografische Provenienz für Code. Open-Core, Spezifikation öffentlich.",
-    "now2l": "forschung",
     "now2": "Ein Paper zur <b>Cloud-Ressourcen-Allokation</b> ist im Double-Blind-Review.",
-    "now3l": "studio",
     "now3": "<b>Edith Studio</b> ist offen für ausgewählte Kundenprojekte."
   },
   "work": {
@@ -100,7 +97,7 @@
     "afterHoursBody": "Ich halte das Leben gerne interessant. Fußball hat mir mehr beigebracht als nur das Spiel, und Cristiano Ronaldos Mentalität erinnert mich ständig daran, dass Konsequenz und harte Arbeit oft mehr zählen als Talent allein. Darüber hinaus findest du mich beim Skizzieren von Ideen, beim Musikhören, auf Reisen, wann immer es geht, und im Gespräch mit Menschen aus ganz unterschiedlichen Lebenswelten. Ich glaube, jede Erfahrung hat etwas zu lehren — und je mehr Perspektiven ich sammle, desto besser werden die Dinge, die ich baue.",
     "outroHeading": "Danke fürs Vorbeischauen",
     "outroButtonLabel": "Eine Notiz von Kevin",
-    "outroButtonOpenLabel": "Bis zum nächsten Mal —",
+    "outroButtonOpenLabel": "Bis zum nächsten Mal",
     "outroBody": "Ich weiß nicht, <i>wo du gerade bist</i>, während du das liest — aber ich freue mich <b>wirklich</b>, dass sich unsere Wege für ein paar Minuten gekreuzt haben. Wenn hier etwas eine Idee, ein Gespräch oder auch nur <i>ein bisschen Neugier</i> ausgelöst hat, dann hat diese kleine Ecke des Internets <b>ihren Zweck erfüllt</b>.",
     "outroSeeYou": "Man sieht sich.",
     "outroSign": "Kevin",
@@ -108,12 +105,13 @@
   },
   "contactPage": {
     "title": "Lass uns etwas bauen, das bleibt.",
-    "body": "Für Kundenarbeit, Forschung, Zusammenarbeit oder eine Frage, die sich lohnt — der schnellste Weg ist E-Mail. Antwort meist innerhalb eines Tages.",
+    "body": "Ob du gerade etwas Spannendes baust, eine Idee erkundest oder einfach nur Hallo sagen willst — mein Postfach steht immer offen. E-Mail ist der schnellste Weg, mich zu erreichen, und ich melde mich meist innerhalb eines Tages zurück.",
+    "availability": "Offen für Freelance-Projekte und Zusammenarbeit.",
     "emailLabel": "Schreib an",
-    "emailCta": "E-Mail senden",
+    "emailCta": "Sag Hallo.",
     "elsewhereLabel": "Anderswo",
     "cvLabel": "Lebenslauf",
-    "localTimeLabel": "Deine Ortszeit"
+    "localTimeLabel": "Gerade ist es"
   },
   "notFound": {
     "title": "Hier ist nichts.",

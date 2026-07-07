@@ -3,6 +3,13 @@
     "title": "Kevin Andrew — quiet systems for loud problems",
     "description": "Kevin Andrew builds cloud infrastructure, protocols, and applied AI — designed from first principles and shipped end to end."
   },
+  "pageMeta": {
+    "research": "Formal research on code provenance and cloud resource allocation — the problems, the approach, and the open questions behind the papers.",
+    "studio": "Edith Studio — a small design and engineering practice by Kevin Andrew. Products and AI systems that simply work, built end to end for select clients.",
+    "writing": "Essays and notes by Kevin Andrew — on building, becoming, and the gap between who you are and what you're building.",
+    "about": "Kevin Andrew — engineer, founder of Edith Studio, and researcher. A curiosity that never sits still: building, writing, and chasing ideas end to end.",
+    "contact": "Get in touch with Kevin Andrew — client work, research, collaborations, or just to say hello. Replies usually within a day."
+  },
   "nav": {
     "work": "Work",
     "research": "Research",
@@ -19,9 +26,7 @@
   "footer": {
     "rights": "© 2026 Kevin Andrew",
     "built": "designed & built by hand",
-    "cv": "CV",
-    "email": "Email",
-    "elsewhere": "Elsewhere"
+    "cv": "CV"
   },
   "home": {
     "heroL1": "Hey,",
@@ -43,15 +48,7 @@
     "doorsResearchBody": "Some problems need more than code. Formal work on provenance and resource allocation — and the open questions behind it.",
     "doorsStudioTitle": "Studio",
     "doorsStudioBody": "A small practice for people who need systems that simply work. Select client work, and how it runs.",
-    "readMore": "Read more",
-    "writingTitle": "Writing",
-    "writingAll": "All writing",
-    "nowTitle": "Currently",
-    "now1l": "protocol",
-    "now1": "Building <b>Etch</b> — cryptographic provenance for code. Open-core, spec written in public.",
-    "now2l": "research",
     "now2": "A paper on <b>cloud resource allocation</b> is under double-blind review.",
-    "now3l": "studio",
     "now3": "<b>Edith Studio</b> is open for select client engagements."
   },
   "work": {
@@ -100,7 +97,7 @@
     "afterHoursBody": "I like keeping life interesting. Football has taught me more than just the game, and Cristiano Ronaldo's mentality is a constant reminder that consistency and hard work often matter more than talent alone. Beyond that, you'll find me sketching ideas, listening to music, travelling whenever I can, and meeting people from different walks of life. I believe every experience has something to teach, and the more perspectives I collect, the better the things I build become.",
     "outroHeading": "Thanks for stopping by",
     "outroButtonLabel": "A note from Kevin",
-    "outroButtonOpenLabel": "Until next time —",
+    "outroButtonOpenLabel": "Until next time",
     "outroBody": "I don't know <i>where you are</i> while reading this — but I'm <b>genuinely glad</b> our paths crossed for a few minutes. If something here sparked an idea, a conversation, or even <i>a tiny bit of curiosity</i>, then this little corner of the internet has <b>done its job</b>.",
     "outroSeeYou": "See you around.",
     "outroSign": "Kevin",
@@ -108,12 +105,13 @@
   },
   "contactPage": {
     "title": "Let's build something that lasts.",
-    "body": "For client work, research, collaboration, or a question worth asking — the fastest route is email. Replies usually within a day.",
+    "body": "Whether you're building something exciting, exploring an idea, or just feel like saying hello, my inbox is always open. Email is the fastest way to reach me, and I'll usually get back to you within a day.",
+    "availability": "Available for freelance and collaborations.",
     "emailLabel": "Write to",
-    "emailCta": "Send an email",
+    "emailCta": "Say hello.",
     "elsewhereLabel": "Elsewhere",
     "cvLabel": "Curriculum vitae",
-    "localTimeLabel": "Your local time"
+    "localTimeLabel": "It's currently"
   },
   "notFound": {
     "title": "Nothing here.",

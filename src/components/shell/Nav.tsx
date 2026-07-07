@@ -107,13 +107,13 @@ export function Nav() {
             </Link>
 
             {/* Desktop */}
-            <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
+            <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
               {LINKS.map(({ href, key }) => (
                 <Magnetic key={key}>
                   <Link
                     href={href}
                     aria-current={isActive(href) ? "page" : undefined}
-                    className={`text-meta transition-colors duration-300 ${
+                    className={`text-[0.95rem] leading-normal transition-colors duration-300 ${
                       isActive(href)
                         ? href === "/studio"
                           ? "text-intel"

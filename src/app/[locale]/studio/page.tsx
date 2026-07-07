@@ -2,6 +2,7 @@ import { readdirSync } from "node:fs";
 import { join, parse } from "node:path";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/motion/Reveal";
 import { StudioHero } from "@/components/studio/StudioHero";
 import { ScrollFill } from "@/components/studio/ScrollFill";
@@ -17,7 +18,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("studio") };
+  const tm = await getTranslations({ locale, namespace: "pageMeta" });
+  return {
+    title: t("studio"),
+    description: tm("studio"),
+    alternates: localeAlternates(locale, "/studio"),
+  };
 }
 
 /**

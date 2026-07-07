@@ -7,6 +7,7 @@ import { StudyBlocks } from "@/components/sections/StudyBlocks";
 import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
 import { Rich } from "@/lib/rich";
+import { localeAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return studies.map((s) => ({ slug: s.slug }));
@@ -17,10 +18,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const study = getStudy(slug);
   if (!study) return {};
-  return { title: study.title, description: study.dek };
+  return {
+    title: study.title,
+    description: study.dek,
+    alternates: localeAlternates(locale, `/work/${slug}`),
+  };
 }
 
 export default async function StudyPage({

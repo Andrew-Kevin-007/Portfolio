@@ -1,9 +1,20 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/Hero";
 import { Highlights } from "@/components/sections/Highlights";
 import { Manifesto } from "@/components/sections/Manifesto";
 import { FeaturedDock } from "@/components/sections/FeaturedDock";
 import { Doors } from "@/components/sections/Doors";
+import { localeAlternates } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: localeAlternates(locale, "/") };
+}
 
 /**
  * Home — one narrative line, one dark room throughout, no competing

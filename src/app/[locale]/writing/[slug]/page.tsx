@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { essays, getEssay } from "@/content/writing";
 import { Rich } from "@/lib/rich";
 import { Reveal } from "@/components/motion/Reveal";
+import { localeAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return essays.map((e) => ({ slug: e.slug }));
@@ -15,10 +16,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const essay = getEssay(slug);
   if (!essay) return {};
-  return { title: essay.title, description: essay.description };
+  return {
+    title: essay.title,
+    description: essay.description,
+    alternates: localeAlternates(locale, `/writing/${slug}`),
+  };
 }
 
 export default async function EssayPage({

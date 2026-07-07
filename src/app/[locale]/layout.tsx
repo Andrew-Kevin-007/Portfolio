@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { Great_Vibes } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -27,15 +26,6 @@ const mono = localFont({
   display: "swap",
   weight: "400 500",
 });
-// Signature script — used only for the hand-signed sign-off on About.
-// Single-weight (400 only) — a real ink-pen signature, not a display face.
-const script = Great_Vibes({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-script-loaded",
-  display: "swap",
-});
-
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -51,7 +41,6 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: { default: t("title"), template: `%s — ${NAME}` },
     description: t("description"),
-    alternates: { canonical: "./" },
     openGraph: {
       siteName: NAME,
       type: "website",
@@ -91,7 +80,7 @@ export default async function LocaleLayout({
       lang={locale}
       data-theme="dark"
       suppressHydrationWarning
-      className={`${sans.variable} ${mono.variable} ${script.variable}`}
+      className={`${sans.variable} ${mono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />

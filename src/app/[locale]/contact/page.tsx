@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/motion/Reveal";
 import { EMAIL, SOCIAL } from "@/content/site";
 import { Clock } from "@/components/shell/Clock";
@@ -11,7 +12,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("contact") };
+  const tm = await getTranslations({ locale, namespace: "pageMeta" });
+  return {
+    title: t("contact"),
+    description: tm("contact"),
+    alternates: localeAlternates(locale, "/contact"),
+  };
 }
 
 export default async function ContactPage({
@@ -28,6 +34,12 @@ export default async function ContactPage({
       <header>
         <h1 className="max-w-[16ch] text-display">{t("title")}</h1>
         <p className="mt-6 max-w-[52ch] text-lede text-text-2">{t("body")}</p>
+        <Reveal delay={0.05}>
+          <p className="mt-5 inline-flex items-center gap-2.5 text-monosm text-text-2">
+            <span aria-hidden>🟢</span>
+            {t("availability")}
+          </p>
+        </Reveal>
       </header>
 
       <section className="mt-16">

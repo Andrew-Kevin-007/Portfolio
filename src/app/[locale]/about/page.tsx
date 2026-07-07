@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { Expander } from "@/components/motion/Expander";
@@ -12,7 +13,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("about") };
+  const tm = await getTranslations({ locale, namespace: "pageMeta" });
+  return {
+    title: t("about"),
+    description: tm("about"),
+    alternates: localeAlternates(locale, "/about"),
+  };
 }
 
 const STOPS = [
@@ -234,6 +240,10 @@ export default async function AboutPage({
                   src={src}
                   alt=""
                   aria-hidden
+                  loading="lazy"
+                  decoding="async"
+                  width={112}
+                  height={112}
                   className="h-full w-full object-cover grayscale transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0"
                 />
               </div>
@@ -265,17 +275,12 @@ export default async function AboutPage({
                     b: (chunks) => <strong>{chunks}</strong>,
                   })}
                 </p>
-                <p className="mt-7 text-heading italic text-text-1">
+                <p className="mt-4 max-w-[56ch] text-bodylg text-text-2">
                   {t("outroSeeYou")}
                 </p>
-                <div className="mt-6 flex items-end gap-4">
-                  <span className="pb-2 text-title font-medium text-text-3">
-                    —
-                  </span>
-                  <span className="font-script text-[clamp(3.25rem,10vw,5.25rem)] leading-[0.8] text-text-1 opacity-60">
-                    {t("outroSign")}
-                  </span>
-                </div>
+                <p className="mt-6 text-title text-text-1">
+                  — {t("outroSign")}
+                </p>
                 <p className="mt-6 text-monosm lowercase tracking-wide text-text-3">
                   {t("outroPs")}
                 </p>
