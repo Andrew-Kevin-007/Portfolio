@@ -60,13 +60,20 @@ export function ScrollFill({
   }, [words]);
 
   return (
-    <p ref={rootRef} className={className} aria-label={text}>
-      {words.map((w, i) => (
-        <span key={i} aria-hidden data-word style={{ opacity: 0.16 }}>
-          {w}
-          {i < words.length - 1 ? " " : ""}
-        </span>
-      ))}
+    <p ref={rootRef} className={className}>
+      {/* Full sentence for assistive tech (and the contrast/agent trees); the
+          animated per-word spans below are decorative. A <p> carries the
+          "paragraph" role, which prohibits aria-label — so the accessible
+          name lives in real text here instead. */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {words.map((w, i) => (
+          <span key={i} data-word style={{ opacity: 0.16 }}>
+            {w}
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        ))}
+      </span>
     </p>
   );
 }

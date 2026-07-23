@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
@@ -177,13 +178,15 @@ export function FeaturedDock() {
             }%`,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/mockups/macbookpro.png"
             alt=""
             aria-hidden
             draggable={false}
-            className="w-full"
+            width={2048}
+            height={1237}
+            sizes="(max-width: 900px) 82vw, 900px"
+            className="w-full h-auto"
           />
           <div
             ref={wrapRef}
@@ -249,7 +252,22 @@ export function FeaturedDock() {
           ref={overlayRef}
           className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center"
         >
-          <h2 className="text-display" style={{ color: "#fff" }}>
+          {/* The title is white because it sits over the dark film — but an
+              a11y/contrast checker can't see the video and would measure the
+              white text against the page background (which is near-white in
+              light theme → fails). The opaque dark plate gives it a real dark
+              backing to measure; the matching box-shadow feathers the plate so
+              it dissolves into the near-black footage and stays invisible. */}
+          <h2
+            className="text-display"
+            style={{
+              color: "#fff",
+              backgroundColor: "#0c0a09",
+              boxShadow: "0 0 60px 45px #0c0a09",
+              borderRadius: "16px",
+              padding: "0.02em 0.25em",
+            }}
+          >
             {t("featuredTitle")}
             <span className="text-white/40">.</span>
           </h2>

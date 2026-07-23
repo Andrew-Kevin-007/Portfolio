@@ -29,9 +29,9 @@ export function EmailCopy() {
 
   return (
     <div className="flex flex-wrap items-center gap-4">
-      <span className="text-bodylg text-text-1" aria-label={t("copyToClipboard")}>
-        {maskEmail(EMAIL)}
-      </span>
+      {/* A <span> has the "generic" role, which prohibits aria-label; the
+          masked text reads fine on its own and the button names the action. */}
+      <span className="text-bodylg text-text-1">{maskEmail(EMAIL)}</span>
       <button type="button" onClick={handleCopy} className="pill shrink-0">
         {copied ? (
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>

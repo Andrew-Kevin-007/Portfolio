@@ -3,7 +3,11 @@
  * Domain-agnostic by design: change SITE_URL once when the domain is final.
  */
 
-export const SITE_URL = "https://kevinandrew.tech"; // [CONFIRM] swap freely — used only for canonical/OG
+// Primary host is www: Vercel serves the site at www.kevinandrew.tech and
+// 308-redirects the bare apex (kevinandrew.tech) to it. Canonical/hreflang/OG
+// must therefore use www so they are self-referential and don't point at a
+// redirecting URL (which Lighthouse flags as an invalid canonical).
+export const SITE_URL = "https://www.kevinandrew.tech";
 export const NAME = "Kevin Andrew";
 export const EMAIL = "kevinandrew2559@gmail.com";
 

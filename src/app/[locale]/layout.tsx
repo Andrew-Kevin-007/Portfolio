@@ -47,7 +47,16 @@ export async function generateMetadata({
       locale: locale === "de" ? "de_DE" : "en_US",
     },
     robots: { index: true, follow: true },
-    icons: { icon: "/icon.svg" },
+    // fav.png is the brand favicon; favicon.ico (generated from it) is the
+    // fallback so /favicon.ico is a real 200 for crawlers/tools that request
+    // it by convention, and apple-touch-icon covers iOS home-screen saves.
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/fav.png", type: "image/png" },
+      ],
+      apple: "/fav.png",
+    },
   };
 }
 

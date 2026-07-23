@@ -1,6 +1,7 @@
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, parse } from "node:path";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/motion/Reveal";
@@ -35,15 +36,43 @@ export async function generateMetadata({
  */
 const IMG = /\.(svg|png|webp|avif|jpe?g)$/i;
 
-function scanPublic(dir: string): { src: string; name: string }[] {
+type PublicImage = { src: string; name: string; width: number; height: number };
+
+/** Intrinsic pixel size read straight from the file header — PNG (IHDR) and
+ * JPEG (SOF) cover every raster asset in /public here, so next/image gets real
+ * dimensions with no build-time dependency. Returns null for vectors/unknowns. */
+function rasterSize(buf: Buffer): { width: number; height: number } | null {
+  if (buf.length >= 24 && buf.toString("ascii", 1, 4) === "PNG") {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  if (buf[0] === 0xff && buf[1] === 0xd8) {
+    let o = 2;
+    while (o + 9 < buf.length) {
+      if (buf[o] !== 0xff) { o++; continue; }
+      const m = buf[o + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+        return { height: buf.readUInt16BE(o + 5), width: buf.readUInt16BE(o + 7) };
+      }
+      o += 2 + buf.readUInt16BE(o + 2);
+    }
+  }
+  return null;
+}
+
+function scanPublic(dir: string): PublicImage[] {
   try {
     return readdirSync(join(process.cwd(), "public", dir))
       .filter((f) => IMG.test(f))
       .sort()
-      .map((f) => ({
-        src: `/${dir}/${encodeURIComponent(f)}`,
-        name: parse(f).name.replace(/[-_]/g, " ").toLowerCase(),
-      }));
+      .map((f) => {
+        const size = rasterSize(readFileSync(join(process.cwd(), "public", dir, f)));
+        return {
+          src: `/${dir}/${encodeURIComponent(f)}`,
+          name: parse(f).name.replace(/[-_]/g, " ").toLowerCase(),
+          width: size?.width ?? 0,
+          height: size?.height ?? 0,
+        };
+      });
   } catch {
     return [];
   }
@@ -158,10 +187,12 @@ export default async function StudioPage({
               <div className="flex items-center justify-center gap-10 sm:gap-14">
                 {logos.map((logo, i) => (
                   <Reveal key={logo.src} y={0} delay={i * 0.08}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={logo.src}
                       alt={logo.name}
+                      width={logo.width}
+                      height={logo.height}
+                      sizes="200px"
                       className={`w-auto opacity-90 ${
                         logo.name.includes("claude")
                           ? "h-8 sm:h-10"
@@ -316,10 +347,12 @@ export default async function StudioPage({
                 {/* the device — enlarged, running off the right edge */}
                 <Parallax speed={0.07}>
                   <Reveal delay={0.1}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={device.src}
                       alt="Mamacita's Miami Eats in development on a MacBook"
+                      width={device.width}
+                      height={device.height}
+                      sizes="(max-width: 768px) 150vw, 90vw"
                       className="mockup-img w-[150%] max-w-none md:w-[220%]"
                     />
                   </Reveal>
