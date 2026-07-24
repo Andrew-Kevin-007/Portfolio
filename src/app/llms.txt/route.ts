@@ -1,6 +1,7 @@
 import { NAME, SITE_URL } from "@/content/site";
 import { studies } from "@/content/work";
 import { essays } from "@/content/writing";
+import { papers } from "@/content/research";
 
 /**
  * /llms.txt — an llmstxt.org-style map of the site for AI agents and tools.
@@ -27,6 +28,10 @@ export function GET() {
     .map((e) => item(e.title, `${SITE_URL}/writing/${e.slug}`, e.description))
     .join("\n");
 
+  const research = papers
+    .map((p) => item(p.title, `${SITE_URL}/research/${p.slug}`, p.oneLiner))
+    .join("\n");
+
   const body = `# ${NAME}
 
 > ${NAME} builds quiet systems for loud problems — engineering and applied-AI work, documented as honest case studies with no fabricated metrics. This file maps the site for AI agents and tools; every link resolves to a full page.
@@ -45,7 +50,9 @@ ${writing}
 
 ## Research
 
-- [Research](${SITE_URL}/research): Papers and technical write-ups.
+Papers and formal work — same honesty rules as the case studies.
+
+${research}
 
 ## Studio
 
