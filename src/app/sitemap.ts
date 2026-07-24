@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/content/site";
 import { studies } from "@/content/work";
 import { essays } from "@/content/writing";
+import { papers } from "@/content/research";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const dynamicPaths = [
     ...studies.map((s) => `/work/${s.slug}`),
     ...essays.map((e) => `/writing/${e.slug}`),
+    ...papers.map((p) => `/research/${p.slug}`),
   ];
 
   const all = [...staticPaths, ...dynamicPaths];

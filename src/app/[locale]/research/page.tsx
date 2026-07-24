@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
+import { papers } from "@/content/research";
 
 export async function generateMetadata({
   params,
@@ -19,11 +20,23 @@ export async function generateMetadata({
   };
 }
 
-const OPEN_QUESTIONS = [
-  "who owns a refactor?",
-  "can allocation be fair and efficient under adversarial load?",
-  "what does provenance mean when the author is a pipeline?",
-  "how much of infrastructure is secretly a pricing problem?",
+const OPEN_QUESTIONS: { q: string; a: string }[] = [
+  {
+    q: "who owns a refactor?",
+    a: "Git credits the last hand to touch a line — so a refactorer quietly inherits authorship of code they never designed. Any provenance system that can't tell restructuring from authorship is measuring the wrong thing.",
+  },
+  {
+    q: "can allocation be fair and efficient under adversarial load?",
+    a: "Markets clear efficiently and starve whoever bids lowest; queues are fair and waste everything. The open question is whether a mechanism can price contention without letting the deepest pockets always win — Auctus is one attempt to find out.",
+  },
+  {
+    q: "what does provenance mean when the author is a pipeline?",
+    a: "When a model writes the code and a human approves it, neither is cleanly the author. Provenance may have to record a chain of custody — who signed off, under what key — rather than a single name.",
+  },
+  {
+    q: "how much of infrastructure is secretly a pricing problem?",
+    a: "More than anyone admits. Rate limits, quotas, priority classes, retry budgets — each is a price refusing to call itself one. See contention as a market and half of infrastructure design turns out to be economics in a trench coat.",
+  },
 ];
 
 export default async function ResearchPage({
@@ -69,59 +82,50 @@ export default async function ResearchPage({
         </Reveal>
       </section>
 
-      {/* Recent work */}
+      {/* Recent work — each paper opens its own detail page */}
       <section className="mt-20">
         <Reveal>
           <p className="mb-4 text-monosm uppercase text-text-3">Recent work</p>
         </Reveal>
         <div>
-          <Reveal>
-            <div className="border-t border-hairline py-6">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                <h2 className="text-title">Clinical risk prediction</h2>
-                <span className="text-monosm text-text-3">applied ML</span>
-              </div>
-              <p className="mt-2 max-w-[60ch] text-body text-text-2">
-                Pressure-ulcer risk modeling with{" "}
-                <a
-                  href="https://scikit-learn.org/stable/modules/ensemble.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1 hover:decoration-text-3"
-                >
-                  ensemble methods
-                </a>{" "}
-                — audited end to end and rebuilt where the audit demanded it.
-              </p>
-              <p className="mt-3 text-monosm text-text-3">
-                ensemble accuracy 87.62% ·{" "}
-                <a
-                  href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1"
-                >
-                  AUC-ROC
-                </a>{" "}
-                88.67%
-              </p>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="border-t border-hairline py-6">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                <h2 className="text-title">Provenance for code</h2>
-                <span className="text-monosm text-text-3">protocol design</span>
-              </div>
-              <p className="mt-2 max-w-[60ch] text-body text-text-2">
-                The research half of Etch: what a checkable claim of authorship
-                requires, and how small the trusted surface can get.
-              </p>
-              <p className="mt-3 text-monosm text-text-3">
-                spec in progress → <Link href="/work/etch" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">case study</Link>
-              </p>
-            </div>
-          </Reveal>
+          {papers.map((p, i) => (
+            <Reveal key={p.slug} delay={i * 0.06}>
+              <Link
+                href={`/research/${p.slug}`}
+                className="group block border-t border-hairline py-6 transition-colors duration-300 hover:border-hairline-strong"
+              >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                  <h2 className="text-title text-text-1 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
+                    {p.title}
+                  </h2>
+                  <span className="shrink-0 text-monosm text-text-3">
+                    {p.domain} · {p.status}
+                  </span>
+                </div>
+                <div className="mt-2 flex items-start justify-between gap-6">
+                  <p className="max-w-[60ch] text-body text-text-2">
+                    {p.oneLiner}
+                  </p>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden
+                    className="mt-1 shrink-0 text-text-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-text-1"
+                  >
+                    <path
+                      d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
           <div className="border-t border-hairline" />
         </div>
         <Reveal>
@@ -139,13 +143,25 @@ export default async function ResearchPage({
           </p>
         </Reveal>
         <div>
-          {OPEN_QUESTIONS.map((q, i) => (
-            <Reveal key={q} delay={i * 0.05}>
-              <div className="flex items-baseline gap-5 border-t border-hairline py-5">
-                <span className="text-monosm text-text-3">
+          {OPEN_QUESTIONS.map((item, i) => (
+            <Reveal key={item.q} delay={i * 0.05}>
+              <div
+                tabIndex={0}
+                className="group flex cursor-help items-baseline gap-5 border-t border-hairline py-5 outline-none"
+              >
+                <span className="text-monosm text-text-3 transition-colors duration-300 group-hover:text-text-2 group-focus-within:text-text-2">
                   q{String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="text-bodylg text-text-1">{q}</p>
+                <div className="flex-1">
+                  <p className="text-bodylg text-text-1">{item.q}</p>
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                      <p className="max-w-[62ch] pt-3 text-body text-text-2 opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-focus-within:opacity-100">
+                        {item.a}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Reveal>
           ))}
@@ -153,8 +169,9 @@ export default async function ResearchPage({
         </div>
         <Reveal>
           <p className="mt-4 max-w-[58ch] text-monosm text-text-3">
-            these outlive papers — a good question is a research program wearing
-            modest clothes
+            linger on a question for where the thinking stands — they outlive any
+            answer, though; a good question is a research program wearing modest
+            clothes
           </p>
         </Reveal>
       </section>
