@@ -122,6 +122,7 @@ export const papers: Paper[] = [
     title: "Quantifying the Cost of Content-Blindness in LLM Inference Scheduling",
     domain: "cloud scheduling",
     status: "accepted",
+    github: "https://github.com/Andrew-Kevin-007/content-blind-scheduling",
     oneLiner:
       "What LLM inference scheduling loses when it cannot read the prompt, measured on 44.1M real Azure production requests. It is less than the literature assumed.",
     dek: "Every serious fix for head-of-line blocking in LLM serving reads the prompt to guess how long the response will be. This paper asks what a scheduler forfeits when it cannot, and finds the answer smaller than expected.",
@@ -171,11 +172,11 @@ export const papers: Paper[] = [
       },
       {
         kind: "p",
-        text: "Co-authored with [Kavita Sri](https://github.com/KavitaSri06).",
+        text: "Accepted at IC3IoT 2026, Track 4 (Blockchain, Cloud Computing and Big Data Analytics), 24 to 25 September 2026. Co-authored with [Kavita Sri](https://github.com/KavitaSri06).",
       },
       {
         kind: "next",
-        text: "Code releases on acceptance, per the paper. The open problem it leaves standing is prefix-cache-aware content-blind scheduling: multi-turn conversation traffic serves repeated prefixes from cache, and the traces used here record context length but not cache residency, so the current result cannot answer what that does.",
+        text: "The simulator, the analysis code, the generated figures and the LaTeX tables are public, and the whole run reproduces in a few minutes on CPU. The open problem it leaves standing is prefix-cache-aware content-blind scheduling: multi-turn conversation traffic serves repeated prefixes from cache, and the traces used here record context length but not cache residency, so the current result cannot answer what that does.",
       },
     ],
   },

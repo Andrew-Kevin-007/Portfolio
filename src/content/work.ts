@@ -165,6 +165,7 @@ export const studies: CaseStudy[] = [
     years: "2026",
     title: "Scheduling LLM inference without reading the prompt",
     dek: "CB-SJF-Work is a content-blind admission policy for LLM inference. It recovers most of an oracle scheduler's gains without ever looking at what the prompt says.",
+    github: "https://github.com/Andrew-Kevin-007/content-blind-scheduling",
     oneLiner:
       "Content-blind LLM inference scheduling, measured on 44.1M real Azure requests. The information a scheduler is denied turns out to be the information it needs least.",
     tldr: {
@@ -173,7 +174,7 @@ export const studies: CaseStudy[] = [
       approach:
         "**Measure what content-blindness actually costs, on 44.1 million real requests from Microsoft Azure's production LLM inference traces.** Service work splits into a prefill pass (visible at admission from context length alone) and a decode phase (not visible until the request finishes), and prefill turns out to be the larger share. CB-SJF-Work orders admissions by estimated total work using only token counts and arrival metadata, never prompt content.",
       state:
-        "**Accepted. IEEE, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
+        "**Accepted at IC3IoT 2026, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
     },
     blocks: [
       { kind: "h2", text: "The noticing" },
@@ -207,12 +208,12 @@ export const studies: CaseStudy[] = [
         items: [
           { label: "Traces analysed", value: "44.1M requests", note: "Azure production LLM inference traces, one full week" },
           { label: "Simulator", value: "trace-driven", note: "continuous-batching engine, iteration-level scheduling" },
-          { label: "Status", value: "IEEE camera-ready", note: "accepted, presenting in person this month" },
+          { label: "Status", value: "IEEE camera-ready", note: "IC3IoT 2026, presenting 24 to 25 September" },
         ],
       },
       {
         kind: "next",
-        text: "Code releases on acceptance, per the paper. The open problem it leaves standing, content-blind scheduling under prefix caching, is where the next work starts.",
+        text: "The simulator, the analysis code and the figures are public, and the whole run reproduces in a few minutes on CPU. The open problem it leaves standing, content-blind scheduling under prefix caching, is where the next work starts.",
       },
     ],
   },
