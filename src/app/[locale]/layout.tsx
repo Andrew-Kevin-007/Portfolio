@@ -47,15 +47,18 @@ export async function generateMetadata({
       locale: locale === "de" ? "de_DE" : "en_US",
     },
     robots: { index: true, follow: true },
-    // fav.png is the brand favicon; favicon.ico (generated from it) is the
-    // fallback so /favicon.ico is a real 200 for crawlers/tools that request
-    // it by convention, and apple-touch-icon covers iOS home-screen saves.
+    // logos/site-logo.png is the brand mark; site-logo-icon.png is the same
+    // image center-cropped to a square (the source is a 1122×1402 portrait,
+    // wrong shape for an icon slot) and favicon.ico is generated from that
+    // same crop, so every icon surface — tab, bookmarks, iOS home screen —
+    // shows one consistent mark. favicon.ico also keeps /favicon.ico a real
+    // 200 for crawlers/tools that request it by convention.
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "any" },
-        { url: "/fav.png", type: "image/png" },
+        { url: "/logos/site-logo-icon.png", type: "image/png" },
       ],
-      apple: "/fav.png",
+      apple: "/logos/site-logo-icon.png",
     },
   };
 }

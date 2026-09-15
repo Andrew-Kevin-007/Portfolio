@@ -26,8 +26,8 @@ const OPEN_QUESTIONS: { q: string; a: string }[] = [
     a: "Git credits the last hand to touch a line — so a refactorer quietly inherits authorship of code they never designed. Any provenance system that can't tell restructuring from authorship is measuring the wrong thing.",
   },
   {
-    q: "can allocation be fair and efficient under adversarial load?",
-    a: "Markets clear efficiently and starve whoever bids lowest; queues are fair and waste everything. The open question is whether a mechanism can price contention without letting the deepest pockets always win — Auctus is one attempt to find out.",
+    q: "does content-blind scheduling survive prefix caching?",
+    a: "Multi-turn conversation traffic serves repeated prefixes from cache, and the traces used to measure content-blind scheduling record context length but not cache residency. Model a 90% hit rate and the measured improvement over first-come-first-serve falls hard — this is the open problem the paper leaves standing, not a footnote to it.",
   },
   {
     q: "what does provenance mean when the author is a pipeline?",
@@ -57,26 +57,26 @@ export default async function ResearchPage({
         </h1>
         <p className="mt-5 max-w-[56ch] text-lede text-text-2">
           Formal work moves slowly and becomes visible only at the end. This
-          page keeps score honestly — <strong>what's under review, what's
+          page keeps score honestly — <strong>what's accepted, what's
           done, and the questions that stay open longer than any paper.</strong>
         </p>
       </header>
 
-      {/* Under review */}
+      {/* Accepted */}
       <section className="mt-20">
         <Reveal>
-          <p className="mb-4 text-monosm uppercase text-text-3">Under review</p>
+          <p className="mb-4 text-monosm uppercase text-text-3">Accepted</p>
         </Reveal>
         <Reveal>
           <div className="rounded-2xl border border-hairline p-6 sm:p-8">
             <p className="max-w-[58ch] text-bodylg text-text-2">
-              A paper on <strong>cloud resource allocation</strong> is
-              currently under review. Venue, title, results, and figures stay
-              off this page until the process concludes — double-blind review
-              is part of the work, not an obstacle to it.
+              A paper on <strong>content-blind LLM inference scheduling</strong> has
+              been accepted — IEEE, camera-ready submitted. Measured on 44.1M
+              real production requests, it recovers most of what a
+              perfect-information scheduler attains without ever reading a prompt.
             </p>
             <p className="mt-4 text-monosm text-text-3">
-              context → <Link href="/work/auctus" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the Auctus case study</Link>
+              read → <Link href="/research/content-blind-scheduling" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the full paper</Link> · engineering strand → <Link href="/work/cb-sjf-work" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the case study</Link>
             </p>
           </div>
         </Reveal>

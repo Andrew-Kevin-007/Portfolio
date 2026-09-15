@@ -31,6 +31,68 @@ export type Paper = {
 
 export const papers: Paper[] = [
   {
+    slug: "content-blind-scheduling",
+    title: "Quantifying the Cost of Content-Blindness in LLM Inference Scheduling",
+    domain: "cloud scheduling",
+    status: "accepted",
+    oneLiner:
+      "What LLM inference scheduling loses when it can't read the prompt — measured on 44.1M real Azure production requests, and it's less than the literature assumed.",
+    dek: "Every serious fix for head-of-line blocking in LLM serving reads the prompt to guess how long the response will be. This paper asks what a scheduler forfeits when it can't — and finds the answer smaller than expected.",
+    tldr: {
+      problem:
+        "**Predicting response length from prompt text is the standard fix for head-of-line blocking in LLM serving — and exactly what a privacy-constrained platform can't do.** Whether anything is actually lost by not reading the prompt had never been measured directly.",
+      approach:
+        "**44.1 million real requests from Microsoft Azure's production LLM inference traces**, split into a conversation and a code workload. Service work decomposes into an observable prefill component (fixed by context length) and an unobservable decode component — the paper measures how much of each there actually is, then evaluates CB-SJF-Work, a scheduler that orders admissions on the observable part alone.",
+      findings:
+        "**Prefill is 91.2% and 98.7% of attributable marginal work** in the two traces — the component a content-blind scheduler CAN see is the larger one. CB-SJF-Work cuts mean normalised latency by 51.5% and 58.8% against first-come-first-serve, recovering 90.3% and 79.3% of what a perfect-information oracle attains — at a measured tail-latency cost the paper reports rather than hides.",
+    },
+    blocks: [
+      { kind: "h2", text: "The problem" },
+      {
+        kind: "p",
+        text: "Continuous-batching inference engines hold a request's slot for as long as it takes to generate its response, so one long-generating request admitted early blocks many short ones behind it. The standard literature answer is to predict output length from the prompt and approximate shortest-job-first. **That requires reading the user's prompt** — a genuine obstacle for a platform under data-protection obligations or offering confidential-computing guarantees.",
+      },
+      {
+        kind: "p",
+        text: "The question underneath the constraint hadn't been answered empirically: **how much of the achievable scheduling benefit is actually locked inside the prompt?**",
+      },
+      { kind: "h2", text: "Approach" },
+      {
+        kind: "p",
+        text: "The paper analyses the [Azure LLM Inference Trace 2024](https://github.com/Azure/AzurePublicDataset) — 44.1 million real production requests across a conversation and a code workload — and decomposes service work into a prefill pass (proportional to context length, visible at admission) and a decode phase (proportional to output length, not visible until the request completes). It then evaluates **CB-SJF-Work**, ordering admissions by estimated total work using only context length and arrival metadata, benchmarked against first-come-first-serve and against oracles with perfect output-length knowledge.",
+      },
+      {
+        kind: "quote",
+        text: "For these workloads the information a scheduler is denied is largely the information it least needs.",
+        cite: "paper abstract",
+      },
+      { kind: "h2", text: "Findings" },
+      {
+        kind: "stats",
+        items: [
+          { label: "Prefill share — conversation", value: "91.2%", note: "of attributable marginal work" },
+          { label: "Prefill share — code", value: "98.7%", note: "of attributable marginal work" },
+          { label: "Latency cut — conversation", value: "51.5%", note: "mean normalised latency vs. FCFS" },
+          { label: "Latency cut — code", value: "58.8%", note: "mean normalised latency vs. FCFS" },
+          { label: "Oracle gap closed — conversation", value: "90.3%", note: "of the attainable improvement" },
+          { label: "Oracle gap closed — code", value: "79.3%", note: "of the attainable improvement" },
+        ],
+      },
+      {
+        kind: "p",
+        text: "Two findings qualify the headline. The gain **is paid for in the tail** — 99th-percentile latency degrades by up to 3.1× at high load on the code workload, a cost an oracle scheduler also incurs, isolated to the act of leaving arrival order rather than to shortest-first ordering itself. And a **learned content-blind length predictor earns almost nothing** over simply ordering by raw context length — a negative result the paper states rather than omits.",
+      },
+      {
+        kind: "p",
+        text: "Co-authored with [Kavita Sri](https://github.com/KavitaSri06), Dept. of Information Technology, LICET.",
+      },
+      {
+        kind: "next",
+        text: "Code releases on acceptance, per the paper. The open problem it leaves standing is prefix-cache-aware content-blind scheduling — multi-turn conversation traffic serves repeated prefixes from cache, and the traces used here record context length but not cache residency, so the current result can't answer what that does.",
+      },
+    ],
+  },
+  {
     slug: "clinical-risk-prediction",
     title: "Clinical risk prediction",
     domain: "applied ML",

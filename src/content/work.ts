@@ -4,8 +4,9 @@
  * HONESTY RULES (enforced):
  * - No fabricated metrics. Anything unverified carries [CONFIRM] and renders
  *   as an explicit "in progress" state, never as a fake number.
- * - Auctus is under double-blind review: no venue name, no paper title,
- *   no figures from the submission. The restraint is deliberate and stated.
+ * - CB-SJF-Work is IEEE camera-ready but not yet indexed on IEEE Xplore:
+ *   every number below is drawn straight from the accepted paper; links
+ *   stay off until the paper is publicly indexed.
  * - Archive entries ship without external links until each link is verified live.
  */
 
@@ -158,50 +159,60 @@ export const studies: CaseStudy[] = [
     ],
   },
   {
-    slug: "auctus",
-    name: "Auctus",
+    slug: "cb-sjf-work",
+    name: "CB-SJF-Work",
     domain: "Research",
-    years: "2024–",
-    title: "Letting cloud resources clear like a market",
-    dek: "Auctus is a bidding protocol for cloud allocation — pricing contention instead of queueing it.",
+    years: "2026",
+    title: "Scheduling LLM inference without reading the prompt",
+    dek: "CB-SJF-Work is a content-blind admission policy for LLM inference — recovering most of an oracle scheduler's gains without ever looking at what the prompt says.",
     oneLiner:
-      "A bidding protocol for cloud resource allocation. Contention is a pricing problem wearing an infrastructure costume.",
+      "Content-blind LLM inference scheduling, measured on 44.1M real Azure requests. The information a scheduler is denied turns out to be the information it needs least.",
     tldr: {
       problem:
-        "**Allocation under contention is usually answered with queues and static quotas** — mechanisms that hide the real question. When demand exceeds supply, something is being valued; the system just refuses to say what.",
+        "**LLM inference schedulers don't know how long a response will be, and the usual fix — predicting length from the prompt — is exactly what a privacy-constrained platform can't do.** First-come-first-serve suffers head-of-line blocking: one long-generating request admitted early blocks many short ones behind it.",
       approach:
-        "**Let workloads express value and let the allocator clear.** Auctus treats contention as a market-clearing problem, with the protocol — not an operator — deciding who runs when supply tightens.",
+        "**Measured what content-blindness actually costs, on 44.1 million real requests from Microsoft Azure's production LLM inference traces.** Service work splits into a prefill pass (visible at admission from context length alone) and a decode phase (not visible until the request finishes) — and prefill turns out to be the larger share. CB-SJF-Work orders admissions by estimated total work using only token counts and arrival metadata, never prompt content.",
       state:
-        "**A paper on this work is under review.** Specifics — venue, results, figures — stay offline until the process concludes. That's how review is supposed to work.",
+        "**Accepted — IEEE, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
     },
     blocks: [
       { kind: "h2", text: "The noticing" },
       {
         kind: "p",
-        text: "Cloud platforms answer scarcity with the politest possible fictions: priority classes, static quotas, retry queues. Each one is an implicit statement about **which workload matters more** — made once, by an operator, long before the moment of contention.",
+        text: "The established fix for head-of-line blocking is to predict how long a response will be — from the prompt itself. But **reading the user's prompt is precisely what a privacy-constrained or regulated serving platform cannot do.** That reframes the question: how much of the achievable scheduling benefit remains available to a scheduler that never reads content at all?",
       },
       {
         kind: "p",
-        text: "But contention is a **pricing problem wearing an infrastructure costume**. When demand exceeds supply, value is being assigned whether or not the system admits it. Auctus starts from the position that the assignment should be explicit, expressed by the workloads themselves, and settled by protocol.",
+        text: "The answer turned out to be almost all of it, for a reason the prompt-reading literature hadn't measured. Service time has two parts: a **prefill pass**, whose cost is fixed by context length and therefore visible without reading anything, and a **decode phase**, which isn't. On 44.1M production requests, prefill is the larger part of the work — 91.2% and 98.7% of attributable marginal work across the two traces analysed.",
       },
-      { kind: "h2", text: "Approach" },
+      { kind: "h2", text: "Decisions" },
       {
-        kind: "p",
-        text: "Workloads carry bids — a declaration of what a unit of resource is worth to them, now. The allocator clears the market instead of draining a queue. The interesting problems live exactly where you'd expect: **fairness under adversarial bidding, starvation resistance, and whether clearing can stay cheap enough to sit in the hot path.**",
-      },
-      { kind: "h2", text: "Where it stands" },
-      {
-        kind: "p",
-        text: "A paper on this work is currently **under review**. Double-blind review means the details — venue, title, results, figures — stay off this page until the process concludes. Not because the work is fragile, but because **the process deserves the same respect the work does.**",
+        kind: "decision",
+        title: "Content-blind by construction, not by omission",
+        body: "CB-SJF-Work admits requests in increasing order of estimated total work — context length and arrival metadata, never prompt or response text. A learned length predictor was tried and kept honest: its own contribution turned out to be almost nothing over ordering by raw context length alone, a negative result stated plainly rather than buried.",
       },
       {
-        kind: "quote",
-        text: "If a result only holds when nobody checks it properly, it isn't a result.",
-        cite: "lab notebook, on why review matters",
+        kind: "decision",
+        title: "Measure the cost, not just the win",
+        body: "Shortest-first ordering reduces mean latency by deferring long requests, which has to degrade the tail. Rather than let that surface later, the paper reports it directly: 99th-percentile latency worsens by up to 3.1× at high load on the code workload — a cost an oracle scheduler pays too, isolated with two control policies (longest-first, random) to show it's the price of leaving arrival order, not of shortest-first ordering itself.",
+      },
+      {
+        kind: "decision",
+        title: "Two accountings, not the flattering one",
+        body: "Attribution by marginal cost and by simulated engine time tell slightly different stories at low load. Both get reported, not just whichever makes the result look better.",
+      },
+      { kind: "h2", text: "State" },
+      {
+        kind: "stats",
+        items: [
+          { label: "Traces analysed", value: "44.1M requests", note: "Azure production LLM inference traces, one full week" },
+          { label: "Simulator", value: "trace-driven", note: "continuous-batching engine, iteration-level scheduling" },
+          { label: "Status", value: "IEEE camera-ready", note: "accepted, presenting in person this month" },
+        ],
       },
       {
         kind: "next",
-        text: "The review cycle runs its course. The open questions — fair clearing under adversarial load, allocation as a first-class protocol concern — are longer than any single paper.",
+        text: "Code releases on acceptance, per the paper. The open problem it leaves standing — content-blind scheduling under prefix caching — is where the next work starts.",
       },
     ],
   },

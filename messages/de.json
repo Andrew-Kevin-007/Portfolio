@@ -4,7 +4,7 @@
     "description": "Kevin Andrew entwickelt Cloud-Infrastruktur, Protokolle und angewandte KI — von Grundprinzipien aus gedacht und vollständig umgesetzt."
   },
   "pageMeta": {
-    "research": "Formale Forschung zu Code-Provenienz und Cloud-Ressourcen-Allokation — die Probleme, der Ansatz und die offenen Fragen hinter den Papern.",
+    "research": "Formale Forschung zu Code-Provenienz und LLM-Inferenz-Scheduling — die Probleme, der Ansatz und die offenen Fragen hinter den Papern.",
     "studio": "Edith Studio — eine kleine Design- und Engineering-Praxis von Kevin Andrew. Produkte und KI-Systeme, die einfach funktionieren, vollständig umgesetzt.",
     "writing": "Essays und Notizen von Kevin Andrew — über das Bauen, das Werden und die Lücke zwischen dem, wer du bist, und dem, was du baust.",
     "about": "Kevin Andrew — Ingenieur, Gründer von Edith Studio und Forscher. Eine Neugier, die nie stillsteht: bauen, schreiben und Ideen vollständig verfolgen.",
@@ -45,10 +45,10 @@
     "doorsWritingTitle": "Texte",
     "doorsWritingBody": "Meist Notizen an mich selbst. Vielleicht helfen sie auch dir.",
     "doorsResearchTitle": "Forschung",
-    "doorsResearchBody": "Manche Probleme brauchen mehr als Code. Formale Arbeit zu Provenienz und Ressourcen-Allokation — und die offenen Fragen dahinter.",
+    "doorsResearchBody": "Manche Probleme brauchen mehr als Code. Formale Arbeit zu Provenienz und Inferenz-Scheduling — und die offenen Fragen dahinter.",
     "doorsStudioTitle": "Studio",
     "doorsStudioBody": "Eine kleine Praxis für Menschen, die Systeme brauchen, die einfach funktionieren. Ausgewählte Kundenarbeit, und wie sie läuft.",
-    "now2": "Ein Paper zur <b>Cloud-Ressourcen-Allokation</b> ist im Double-Blind-Review.",
+    "now2": "Ein Paper zum <b>LLM-Inferenz-Scheduling</b> wurde angenommen — Camera-Ready bei IEEE eingereicht.",
     "now3": "<b>Edith Studio</b> ist offen für ausgewählte Kundenprojekte."
   },
   "work": {
