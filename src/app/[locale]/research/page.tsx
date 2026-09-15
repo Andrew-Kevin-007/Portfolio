@@ -27,7 +27,11 @@ const OPEN_QUESTIONS: { q: string; a: string }[] = [
   },
   {
     q: "does content-blind scheduling survive prefix caching?",
-    a: "Multi-turn conversation traffic serves repeated prefixes from cache, and the traces used to measure content-blind scheduling record context length but not cache residency. Model a 90% hit rate and the measured improvement over first-come-first-serve falls hard — this is the open problem the paper leaves standing, not a footnote to it.",
+    a: "Multi-turn conversation traffic serves repeated prefixes from cache, and the traces used to measure content-blind scheduling record context length but not cache residency. Model a 90% hit rate and the measured improvement over first-come-first-serve falls hard. This is the open problem that work leaves standing, not a footnote to it.",
+  },
+  {
+    q: "how do you name an entity you have only seen in another script?",
+    a: "Translating the input repairs relation extraction and does nothing for entity grounding, because understanding a sentence and canonicalizing the things in it are different skills. A model that reads a Tamil sentence perfectly can still fail to produce the right Wikidata identifier. Canonicalization across scripts is the half of the problem no amount of translation reaches.",
   },
   {
     q: "what does provenance mean when the author is a pipeline?",
@@ -57,8 +61,8 @@ export default async function ResearchPage({
         </h1>
         <p className="mt-5 max-w-[56ch] text-lede text-text-2">
           Formal work moves slowly and becomes visible only at the end. This
-          page keeps score honestly — <strong>what's accepted, what's
-          done, and the questions that stay open longer than any paper.</strong>
+          page keeps score honestly: <strong>what's accepted, what's done,
+          and the questions that stay open longer than any paper.</strong>
         </p>
       </header>
 
@@ -70,13 +74,13 @@ export default async function ResearchPage({
         <Reveal>
           <div className="rounded-2xl border border-hairline p-6 sm:p-8">
             <p className="max-w-[58ch] text-bodylg text-text-2">
-              A paper on <strong>content-blind LLM inference scheduling</strong> has
-              been accepted — IEEE, camera-ready submitted. Measured on 44.1M
-              real production requests, it recovers most of what a
-              perfect-information scheduler attains without ever reading a prompt.
+              <strong>Two papers accepted in 2026.</strong> One with IEEE, on
+              scheduling LLM inference without ever reading the prompt. One with
+              Springer, a pre-registered study of what translation does and does
+              not fix when populating Wikidata from eight Indic languages.
             </p>
             <p className="mt-4 text-monosm text-text-3">
-              read → <Link href="/research/content-blind-scheduling" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the full paper</Link> · engineering strand → <Link href="/work/cb-sjf-work" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the case study</Link>
+              read → <Link href="/research/indic-kg-population" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the Springer paper</Link> · <Link href="/research/content-blind-scheduling" className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-300 hover:text-text-1">the IEEE paper</Link>
             </p>
           </div>
         </Reveal>

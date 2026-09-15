@@ -4,7 +4,7 @@
     "description": "Kevin Andrew builds cloud infrastructure, protocols, and applied AI — designed from first principles and shipped end to end."
   },
   "pageMeta": {
-    "research": "Formal research on code provenance and LLM inference scheduling — the problems, the approach, and the open questions behind the papers.",
+    "research": "Formal research on code provenance, LLM inference scheduling and multilingual knowledge-graph population: the problems, the approach, and the open questions behind the papers.",
     "studio": "Edith Studio — a small design and engineering practice by Kevin Andrew. Products and AI systems that simply work, built end to end for select clients.",
     "writing": "Essays and notes by Kevin Andrew — on building, becoming, and the gap between who you are and what you're building.",
     "about": "Kevin Andrew — engineer, founder of Edith Studio, and researcher. A curiosity that never sits still: building, writing, and chasing ideas end to end.",
@@ -45,10 +45,10 @@
     "doorsWritingTitle": "Writing",
     "doorsWritingBody": "Mostly notes to myself. Maybe they'll help you too.",
     "doorsResearchTitle": "Research",
-    "doorsResearchBody": "Some problems need more than code. Formal work on provenance and inference scheduling — and the open questions behind it.",
+    "doorsResearchBody": "Some problems need more than code. Formal work on provenance, inference scheduling and multilingual knowledge graphs, plus the open questions behind it.",
     "doorsStudioTitle": "Studio",
     "doorsStudioBody": "A small practice for people who need systems that simply work. Select client work, and how it runs.",
-    "now2": "A paper on <b>LLM inference scheduling</b> is accepted — IEEE camera-ready submitted.",
+    "now2": "<b>Two papers</b> accepted in 2026, with IEEE and Springer.",
     "now3": "<b>Edith Studio</b> is open for select client engagements."
   },
   "work": {

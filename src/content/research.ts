@@ -31,35 +31,122 @@ export type Paper = {
 
 export const papers: Paper[] = [
   {
+    slug: "indic-kg-population",
+    title: "Translation Repairs Relations, Not Retrieval",
+    domain: "multilingual NLP",
+    status: "accepted",
+    oneLiner:
+      "A pre-registered study of what translation does and does not fix when populating Wikidata from eight Indic languages.",
+    dek: "Populating a knowledge base from low-resource text fails in two different ways, and standard evaluation scores them as one number. This paper separates them, then tests whether translating to English fixes either.",
+    tldr: {
+      problem:
+        "**Populating Wikidata from low-resource language text fails in two distinct ways, and a monolithic triple score cannot tell them apart.** A model can fail to understand the source sentence, or it can understand it perfectly and still fail to name the canonical identifier of an entity it has only ever seen written in another script.",
+      approach:
+        "**Two open 8B models, eight Indic languages, two arms.** Qwen3-8B and Llama-3.1-8B-Instruct run DIRECT and PIVOT (translate first via IndicTrans2, then extract), scored component by component so every error is attributable either to relation identification or to entity grounding. The hypothesis, the decision thresholds and the outcome-to-claim mapping were frozen in a version-controlled pre-registration before any model output was scored.",
+      findings:
+        "**Translation repairs relations. It does not repair retrieval.** Relation-F1 improves for Qwen3-8B in all eight languages and for Llama-3.1-8B-Instruct in seven of eight. Entity grounding yields no verdict-eligible gap, and for Qwen3-8B translation makes grounding measurably worse.",
+    },
+    blocks: [
+      { kind: "h2", text: "The question" },
+      {
+        kind: "p",
+        text: "Knowledge bases like Wikidata get populated from text, and in low-resource languages that process fails often. The interesting part is that it fails for two unrelated reasons. **A model can fail to understand the source sentence, or it can understand it perfectly and still fail to ground what it understood into a canonical identifier.**",
+      },
+      {
+        kind: "p",
+        text: "Standard evaluation cannot tell you which one happened. Extracted triples are scored monolithically, so a missed triple never says whether the model misread the sentence or simply could not name the Wikidata identifier of an entity it had only seen in another script. The conflation is expensive because **the two failures call for opposite remedies**: better multilingual pretraining addresses the first and does nothing for the second.",
+      },
+      { kind: "h2", text: "Approach" },
+      {
+        kind: "p",
+        text: "Eight Indic languages (Hindi, Bengali, Telugu, Tamil, Kannada, Malayalam, Marathi, Gujarati) plus an English control. Between them they are spoken by over a billion people and remain low-resource by knowledge-base coverage. Two open 8B-class instruction-tuned models, Qwen3-8B and Llama-3.1-8B-Instruct, each run in a DIRECT arm and in a PIVOT arm that translates to English first.",
+      },
+      {
+        kind: "p",
+        text: "The benchmark was built by reversing the manually annotated test split of XAlign, a fact-to-text alignment resource for Indic languages, and deterministically re-grounding its English fact labels into Wikidata identifiers. Then the benchmark itself was audited, because a measuring instrument of unknown accuracy is not evidence.",
+      },
+      { kind: "h2", text: "Decisions" },
+      {
+        kind: "decision",
+        title: "The verdict was frozen before the scoring",
+        body: "The hypothesis, its decision thresholds and the mapping from outcome to claim were committed to a version-controlled pre-registration before a single model output was scored. That commit ordering is the whole defence: nobody can have chosen the threshold that made the result look good, because the threshold existed first.",
+      },
+      {
+        kind: "decision",
+        title: "Score the components, not the triple",
+        body: "Every error is attributed to relation identification or to entity grounding by construction, rather than collapsed into a single number. This is the only reason the headline finding can exist at all, because it is a statement about which half of the problem translation actually touches.",
+      },
+      {
+        kind: "decision",
+        title: "Audit the instrument before trusting it",
+        body: "Predictions absent from the gold were cross-checked against live Wikidata, with a screened native-speaker check for one language on top. That puts a quantified floor under how incomplete the adapted gold is: at most 4.8% of them are in fact true in the live knowledge base, pooled at 1.3%. Roughly a fifth of predictions never enter that classification at all, because they lack a resolvable subject, property or object identifier, and the paper reports that rather than quietly excluding it.",
+      },
+      { kind: "h2", text: "Findings" },
+      {
+        kind: "stats",
+        items: [
+          { label: "Relation-F1, Qwen3-8B", value: "8/8", note: "languages improved by translating first" },
+          { label: "Relation-F1, Llama-3.1-8B", value: "7/8", note: "languages improved, one did not" },
+          { label: "Entity-F1, Qwen3-8B", value: "7/8", note: "languages got worse under translation" },
+        ],
+      },
+      {
+        kind: "p",
+        text: "The verdict is mixed and the paper says so plainly. The confirmation criterion runs over the five Qwen3-8B languages that have a measurable baseline gap. All five move in the hypothesised direction, giving an exact one-sided sign test of p = .031, **which does not survive the conservative family correction applied across the decision table.**",
+      },
+      {
+        kind: "p",
+        text: "Entity grounding never produces a verdict at all, for two different reasons worth separating. Qwen3-8B has no measurable gap left to recover, and Llama-3.1-8B-Instruct's four usable languages fall below the five-language bar the pre-registration set in advance.",
+      },
+      {
+        kind: "p",
+        text: "The Qwen3-8B entity result is the one worth sitting with. Translation makes grounding worse, and decomposing the archived candidates attributes that to **retrieval rather than selection**: once the correct entity is retrieved at all, the model picks it in 92.9% to 99.5% of calls. Llama-3.1-8B-Instruct does not replicate the pattern, and its retrieval direction inverts.",
+      },
+      {
+        kind: "quote",
+        text: "A model can understand a translated sentence perfectly and still be unable to name the identifier of an entity it has only ever seen written in another script.",
+        cite: "on why the two failure modes need opposite fixes",
+      },
+      {
+        kind: "p",
+        text: "Accepted at SPELLL 2026, Track 7, for publication by Springer in CCIS.",
+      },
+      {
+        kind: "next",
+        text: "The benchmark, the audit protocol and the evaluation harness are committed for release, and the links go up once there is something citable to point at. The half of the problem translation does not touch, canonicalizing an entity across scripts, is the one worth attacking next.",
+      },
+    ],
+  },
+  {
     slug: "content-blind-scheduling",
     title: "Quantifying the Cost of Content-Blindness in LLM Inference Scheduling",
     domain: "cloud scheduling",
     status: "accepted",
     oneLiner:
-      "What LLM inference scheduling loses when it can't read the prompt — measured on 44.1M real Azure production requests, and it's less than the literature assumed.",
-    dek: "Every serious fix for head-of-line blocking in LLM serving reads the prompt to guess how long the response will be. This paper asks what a scheduler forfeits when it can't — and finds the answer smaller than expected.",
+      "What LLM inference scheduling loses when it cannot read the prompt, measured on 44.1M real Azure production requests. It is less than the literature assumed.",
+    dek: "Every serious fix for head-of-line blocking in LLM serving reads the prompt to guess how long the response will be. This paper asks what a scheduler forfeits when it cannot, and finds the answer smaller than expected.",
     tldr: {
       problem:
-        "**Predicting response length from prompt text is the standard fix for head-of-line blocking in LLM serving — and exactly what a privacy-constrained platform can't do.** Whether anything is actually lost by not reading the prompt had never been measured directly.",
+        "**Predicting response length from prompt text is the standard fix for head-of-line blocking in LLM serving, and exactly what a privacy-constrained platform cannot do.** Whether anything is actually lost by not reading the prompt had never been measured directly.",
       approach:
-        "**44.1 million real requests from Microsoft Azure's production LLM inference traces**, split into a conversation and a code workload. Service work decomposes into an observable prefill component (fixed by context length) and an unobservable decode component — the paper measures how much of each there actually is, then evaluates CB-SJF-Work, a scheduler that orders admissions on the observable part alone.",
+        "**44.1 million real requests from Microsoft Azure's production LLM inference traces**, split into a conversation and a code workload. Service work decomposes into an observable prefill component (fixed by context length) and an unobservable decode component. The paper measures how much of each there actually is, then evaluates CB-SJF-Work, a scheduler that orders admissions on the observable part alone.",
       findings:
-        "**Prefill is 91.2% and 98.7% of attributable marginal work** in the two traces — the component a content-blind scheduler CAN see is the larger one. CB-SJF-Work cuts mean normalised latency by 51.5% and 58.8% against first-come-first-serve, recovering 90.3% and 79.3% of what a perfect-information oracle attains — at a measured tail-latency cost the paper reports rather than hides.",
+        "**Prefill is 91.2% and 98.7% of attributable marginal work** in the two traces, so the component a content-blind scheduler can see is the larger one. CB-SJF-Work cuts mean normalised latency by 51.5% and 58.8% against first-come-first-serve, recovering 90.3% and 79.3% of what a perfect-information oracle attains, at a measured tail-latency cost the paper reports rather than hides.",
     },
     blocks: [
       { kind: "h2", text: "The problem" },
       {
         kind: "p",
-        text: "Continuous-batching inference engines hold a request's slot for as long as it takes to generate its response, so one long-generating request admitted early blocks many short ones behind it. The standard literature answer is to predict output length from the prompt and approximate shortest-job-first. **That requires reading the user's prompt** — a genuine obstacle for a platform under data-protection obligations or offering confidential-computing guarantees.",
+        text: "Continuous-batching inference engines hold a request's slot for as long as it takes to generate its response, so one long-generating request admitted early blocks many short ones behind it. The standard literature answer is to predict output length from the prompt and approximate shortest-job-first. **That requires reading the user's prompt**, which is a genuine obstacle for a platform under data-protection obligations or offering confidential-computing guarantees.",
       },
       {
         kind: "p",
-        text: "The question underneath the constraint hadn't been answered empirically: **how much of the achievable scheduling benefit is actually locked inside the prompt?**",
+        text: "The question underneath the constraint had not been answered empirically: **how much of the achievable scheduling benefit is actually locked inside the prompt?**",
       },
       { kind: "h2", text: "Approach" },
       {
         kind: "p",
-        text: "The paper analyses the [Azure LLM Inference Trace 2024](https://github.com/Azure/AzurePublicDataset) — 44.1 million real production requests across a conversation and a code workload — and decomposes service work into a prefill pass (proportional to context length, visible at admission) and a decode phase (proportional to output length, not visible until the request completes). It then evaluates **CB-SJF-Work**, ordering admissions by estimated total work using only context length and arrival metadata, benchmarked against first-come-first-serve and against oracles with perfect output-length knowledge.",
+        text: "The paper analyses the [Azure LLM Inference Trace 2024](https://github.com/Azure/AzurePublicDataset), 44.1 million real production requests across a conversation and a code workload, and decomposes service work into a prefill pass (proportional to context length, visible at admission) and a decode phase (proportional to output length, not visible until the request completes). It then evaluates **CB-SJF-Work**, ordering admissions by estimated total work using only context length and arrival metadata, benchmarked against first-come-first-serve and against oracles with perfect output-length knowledge.",
       },
       {
         kind: "quote",
@@ -70,25 +157,25 @@ export const papers: Paper[] = [
       {
         kind: "stats",
         items: [
-          { label: "Prefill share — conversation", value: "91.2%", note: "of attributable marginal work" },
-          { label: "Prefill share — code", value: "98.7%", note: "of attributable marginal work" },
-          { label: "Latency cut — conversation", value: "51.5%", note: "mean normalised latency vs. FCFS" },
-          { label: "Latency cut — code", value: "58.8%", note: "mean normalised latency vs. FCFS" },
-          { label: "Oracle gap closed — conversation", value: "90.3%", note: "of the attainable improvement" },
-          { label: "Oracle gap closed — code", value: "79.3%", note: "of the attainable improvement" },
+          { label: "Prefill share, conversation", value: "91.2%", note: "of attributable marginal work" },
+          { label: "Prefill share, code", value: "98.7%", note: "of attributable marginal work" },
+          { label: "Latency cut, conversation", value: "51.5%", note: "mean normalised latency vs. FCFS" },
+          { label: "Latency cut, code", value: "58.8%", note: "mean normalised latency vs. FCFS" },
+          { label: "Oracle gap closed, conversation", value: "90.3%", note: "of the attainable improvement" },
+          { label: "Oracle gap closed, code", value: "79.3%", note: "of the attainable improvement" },
         ],
       },
       {
         kind: "p",
-        text: "Two findings qualify the headline. The gain **is paid for in the tail** — 99th-percentile latency degrades by up to 3.1× at high load on the code workload, a cost an oracle scheduler also incurs, isolated to the act of leaving arrival order rather than to shortest-first ordering itself. And a **learned content-blind length predictor earns almost nothing** over simply ordering by raw context length — a negative result the paper states rather than omits.",
+        text: "Two findings qualify the headline. The gain **is paid for in the tail**: 99th-percentile latency degrades by up to 3.1x at high load on the code workload, a cost an oracle scheduler also incurs, and one isolated to the act of leaving arrival order rather than to shortest-first ordering itself. And a **learned content-blind length predictor earns almost nothing** over simply ordering by raw context length, a negative result the paper states rather than omits.",
       },
       {
         kind: "p",
-        text: "Co-authored with [Kavita Sri](https://github.com/KavitaSri06), Dept. of Information Technology, LICET.",
+        text: "Co-authored with [Kavita Sri](https://github.com/KavitaSri06).",
       },
       {
         kind: "next",
-        text: "Code releases on acceptance, per the paper. The open problem it leaves standing is prefix-cache-aware content-blind scheduling — multi-turn conversation traffic serves repeated prefixes from cache, and the traces used here record context length but not cache residency, so the current result can't answer what that does.",
+        text: "Code releases on acceptance, per the paper. The open problem it leaves standing is prefix-cache-aware content-blind scheduling: multi-turn conversation traffic serves repeated prefixes from cache, and the traces used here record context length but not cache residency, so the current result cannot answer what that does.",
       },
     ],
   },

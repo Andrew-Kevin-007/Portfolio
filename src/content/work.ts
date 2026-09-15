@@ -164,37 +164,37 @@ export const studies: CaseStudy[] = [
     domain: "Research",
     years: "2026",
     title: "Scheduling LLM inference without reading the prompt",
-    dek: "CB-SJF-Work is a content-blind admission policy for LLM inference — recovering most of an oracle scheduler's gains without ever looking at what the prompt says.",
+    dek: "CB-SJF-Work is a content-blind admission policy for LLM inference. It recovers most of an oracle scheduler's gains without ever looking at what the prompt says.",
     oneLiner:
       "Content-blind LLM inference scheduling, measured on 44.1M real Azure requests. The information a scheduler is denied turns out to be the information it needs least.",
     tldr: {
       problem:
-        "**LLM inference schedulers don't know how long a response will be, and the usual fix — predicting length from the prompt — is exactly what a privacy-constrained platform can't do.** First-come-first-serve suffers head-of-line blocking: one long-generating request admitted early blocks many short ones behind it.",
+        "**LLM inference schedulers do not know how long a response will be, and the usual fix, predicting length from the prompt, is exactly what a privacy-constrained platform cannot do.** First-come-first-serve suffers head-of-line blocking: one long-generating request admitted early blocks many short ones behind it.",
       approach:
-        "**Measured what content-blindness actually costs, on 44.1 million real requests from Microsoft Azure's production LLM inference traces.** Service work splits into a prefill pass (visible at admission from context length alone) and a decode phase (not visible until the request finishes) — and prefill turns out to be the larger share. CB-SJF-Work orders admissions by estimated total work using only token counts and arrival metadata, never prompt content.",
+        "**Measure what content-blindness actually costs, on 44.1 million real requests from Microsoft Azure's production LLM inference traces.** Service work splits into a prefill pass (visible at admission from context length alone) and a decode phase (not visible until the request finishes), and prefill turns out to be the larger share. CB-SJF-Work orders admissions by estimated total work using only token counts and arrival metadata, never prompt content.",
       state:
-        "**Accepted — IEEE, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
+        "**Accepted. IEEE, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
     },
     blocks: [
       { kind: "h2", text: "The noticing" },
       {
         kind: "p",
-        text: "The established fix for head-of-line blocking is to predict how long a response will be — from the prompt itself. But **reading the user's prompt is precisely what a privacy-constrained or regulated serving platform cannot do.** That reframes the question: how much of the achievable scheduling benefit remains available to a scheduler that never reads content at all?",
+        text: "The established fix for head-of-line blocking is to predict how long a response will be, using the prompt itself. But **reading the user's prompt is precisely what a privacy-constrained or regulated serving platform cannot do.** That reframes the question: how much of the achievable scheduling benefit remains available to a scheduler that never reads content at all?",
       },
       {
         kind: "p",
-        text: "The answer turned out to be almost all of it, for a reason the prompt-reading literature hadn't measured. Service time has two parts: a **prefill pass**, whose cost is fixed by context length and therefore visible without reading anything, and a **decode phase**, which isn't. On 44.1M production requests, prefill is the larger part of the work — 91.2% and 98.7% of attributable marginal work across the two traces analysed.",
+        text: "The answer turned out to be almost all of it, for a reason the prompt-reading literature had not measured. Service time has two parts: a **prefill pass**, whose cost is fixed by context length and therefore visible without reading anything, and a **decode phase**, which is not. On 44.1M production requests, prefill is the larger part of the work, at 91.2% and 98.7% of attributable marginal work across the two traces analysed.",
       },
       { kind: "h2", text: "Decisions" },
       {
         kind: "decision",
         title: "Content-blind by construction, not by omission",
-        body: "CB-SJF-Work admits requests in increasing order of estimated total work — context length and arrival metadata, never prompt or response text. A learned length predictor was tried and kept honest: its own contribution turned out to be almost nothing over ordering by raw context length alone, a negative result stated plainly rather than buried.",
+        body: "CB-SJF-Work admits requests in increasing order of estimated total work, using context length and arrival metadata, never prompt or response text. A learned length predictor was tried and kept honest: its own contribution turned out to be almost nothing over ordering by raw context length alone, a negative result stated plainly rather than buried.",
       },
       {
         kind: "decision",
         title: "Measure the cost, not just the win",
-        body: "Shortest-first ordering reduces mean latency by deferring long requests, which has to degrade the tail. Rather than let that surface later, the paper reports it directly: 99th-percentile latency worsens by up to 3.1× at high load on the code workload — a cost an oracle scheduler pays too, isolated with two control policies (longest-first, random) to show it's the price of leaving arrival order, not of shortest-first ordering itself.",
+        body: "Shortest-first ordering reduces mean latency by deferring long requests, which has to degrade the tail. Rather than let that surface later, the paper reports it directly: 99th-percentile latency worsens by up to 3.1x at high load on the code workload. An oracle scheduler pays that cost too, and two control policies (longest-first, random) isolate it to the price of leaving arrival order, not to shortest-first ordering itself.",
       },
       {
         kind: "decision",
@@ -212,7 +212,71 @@ export const studies: CaseStudy[] = [
       },
       {
         kind: "next",
-        text: "Code releases on acceptance, per the paper. The open problem it leaves standing — content-blind scheduling under prefix caching — is where the next work starts.",
+        text: "Code releases on acceptance, per the paper. The open problem it leaves standing, content-blind scheduling under prefix caching, is where the next work starts.",
+      },
+    ],
+  },
+  {
+    slug: "the-pit",
+    name: "The Pit",
+    domain: "System",
+    years: "2026",
+    title: "A proving ground where agents cannot fake the result",
+    dek: "The Pit gives every AI trading agent the same stake, the same clock and the same pool, then writes what it actually did to a ledger it does not control.",
+    github: "https://github.com/Andrew-Kevin-007/The-Pit",
+    live: "https://the-pit-web-ashen.vercel.app/",
+    oneLiner:
+      "An adversarial proving ground for AI trading agents. Fixed stake, fixed clock, on-chain rules the agent structurally cannot get around.",
+    tldr: {
+      problem:
+        "**There is no trustworthy way to prove an AI trading agent is good before handing it real capital.** A backtest can be cherry-picked, a screenshot can be cropped, and \u201cmy agent returns 12% a week\u201d is unverifiable because nothing about it is public, adversarial or tamper-proof.",
+      approach:
+        "**Take the choices away from the author.** Every registered agent gets the same $1 USDC stake, the same six 50-second rounds and the same house-seeded Uniswap v3 pool. A custom router enforces the rules on-chain, and the outcome is indexed to a public subgraph written by the contracts rather than by the agent's owner.",
+      state:
+        "**Built and running on Base Sepolia**, submitted to ETHOnline 2026. Contracts, agent runner, subgraph and dashboard all shipped, with 51 automated tests including a live fork test against real Uniswap v3 contracts.",
+    },
+    blocks: [
+      { kind: "h2", text: "The noticing" },
+      {
+        kind: "p",
+        text: "Every claim about an AI trading agent's performance is currently self-reported. The author picks the window, the pair and the market regime, then publishes the run that worked. **None of these failure modes are exotic. They survive because nothing about a backtest is adversarial.**",
+      },
+      {
+        kind: "p",
+        text: "The fix is not a better backtest. It is removing the author's control over the conditions: a clock nobody chooses, a market nobody seeds, a stake nobody varies, and a record written by the contracts instead of by the person making the claim.",
+      },
+      { kind: "h2", text: "Decisions" },
+      {
+        kind: "decision",
+        title: "The rules live in the router, not in the rulebook",
+        body: "PitRouter is a custom [Uniswap v3](https://docs.uniswap.org/) router that validates participant eligibility, enforces the per-round trade limit and tracks swap fees for rebate distribution. Putting the fairness rules inside the contract means an agent cannot exceed them, rather than being trusted not to. A rule that is merely documented is a rule that breaks under competitive pressure.",
+      },
+      {
+        kind: "decision",
+        title: "The leader signal is coarse and delayed on purpose",
+        body: "Publishing exact profit and loss in real time would let a competitor reverse-engineer a live position from the public price feed while the round is still open. So the leaderboard gives a blunt, lagged signal during a round and the precise numbers only after it closes. Transparency that leaks strategy mid-round is just a different unfairness.",
+      },
+      {
+        kind: "decision",
+        title: "The record is the product",
+        body: "Results are indexed to a subgraph on [The Graph](https://thegraph.com/), written by the contracts themselves. Agents read their own indexed match history back through the Subgraph MCP and use it in later rounds, which makes the permanent record an input to the competition rather than just a report on it.",
+      },
+      { kind: "h2", text: "State" },
+      {
+        kind: "stats",
+        items: [
+          { label: "Network", value: "Base Sepolia", note: "custom Uniswap v3 router, house-seeded pool" },
+          { label: "Tests", value: "51 automated", note: "including a live fork test against real Uniswap v3" },
+          { label: "Surfaces", value: "four", note: "contracts, agent runner, subgraph, Next.js dashboard" },
+        ],
+      },
+      {
+        kind: "p",
+        text: "A full end-to-end rehearsal ran with three separate agent wallets and confirmed the indexing was accurate. The stack is a TypeScript monorepo with [Foundry](https://book.getfoundry.sh/) contracts on Solidity 0.8.26, agents built on the Claude Agent SDK, and a Next.js dashboard. The submission is on the [ETHOnline 2026 showcase](https://ethglobal.com/showcase/the-pit-x2ic7).",
+      },
+      {
+        kind: "next",
+        text: "Privy and World integration are designed and deliberately out of scope for this build, so that the proving-ground mechanism and its fairness rules get proven first. Everything currently runs on testnet, which is the right place for a mechanism whose entire claim is that it cannot be gamed.",
       },
     ],
   },
