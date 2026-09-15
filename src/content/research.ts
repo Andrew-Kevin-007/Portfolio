@@ -35,6 +35,7 @@ export const papers: Paper[] = [
     title: "Translation Repairs Relations, Not Retrieval",
     domain: "multilingual NLP",
     status: "accepted",
+    github: "https://github.com/Andrew-Kevin-007/translation-repairs-relations",
     oneLiner:
       "A pre-registered study of what translation does and does not fix when populating Wikidata from eight Indic languages.",
     dek: "Populating a knowledge base from low-resource text fails in two different ways, and standard evaluation scores them as one number. This paper separates them, then tests whether translating to English fixes either.",
@@ -113,7 +114,7 @@ export const papers: Paper[] = [
       },
       {
         kind: "next",
-        text: "The benchmark, the audit protocol and the evaluation harness are committed for release, and the links go up once there is something citable to point at. The half of the problem translation does not touch, canonicalizing an entity across scripts, is the one worth attacking next.",
+        text: "The benchmark, the audit protocol and the evaluation harness are public, with the pre-registration commit intact as the first entry in the repository's history. The half of the problem translation does not touch, canonicalizing an entity across scripts, is the one worth attacking next.",
       },
     ],
   },
