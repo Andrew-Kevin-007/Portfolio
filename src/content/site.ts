@@ -46,23 +46,24 @@ export const JOB_TITLE = "Software Engineer";
 export const DESCRIPTION =
   "Kevin Andrew builds cloud infrastructure, protocols, and applied AI — designed from first principles and shipped end to end.";
 /**
- * One person, three legally-correct spellings. Passport reads given name
- * "Kevin Andrew", surname "Arockia Arasu"; mark sheets and every government
- * document read "Kevin Andrew A"; the site brand is "Kevin Andrew"; and the
- * publication byline is "Kevin Andrew A".
+ * One person, two public spellings, and NO family name — the whole name is
+ * the given name, with "A" carried as an initial the way Tamil naming works.
+ * The site brand is "Kevin Andrew"; both paper bylines read "Kevin Andrew A".
+ * ORCID matches: given-names "KEVIN ANDREW", family-name deliberately blank,
+ * credit-name "Kevin Andrew A".
  *
- * None of these can be changed, so they are DECLARED instead. schema.org
- * exists for exactly this: givenName/familyName carry the legal name and
- * alternateName carries every string a crawler might encounter, so the
- * variants resolve to one Person rather than splitting into three weak ones.
- * This matters here because the name is already held on the open web by a
- * namesake artist and a novelist.
+ * Neither string can be changed to suit the other, so both are DECLARED.
+ * alternateName is what stops the site and the DOIs resolving to two weakly
+ * connected people — which matters here because the name is already held on
+ * the open web by a namesake artist and a novelist.
+ *
+ * No familyName is emitted: asserting one would contradict ORCID and the
+ * documents. The full legal name is deliberately left off the public site.
  */
 export const GIVEN_NAME = "Kevin Andrew";
-export const FAMILY_NAME = "Arockia Arasu";
 /** The byline on both papers — the string the DOIs will carry. */
 export const PUBLISHED_NAME = "Kevin Andrew A";
-export const NAME_VARIANTS = [PUBLISHED_NAME, "Kevin Andrew Arockia Arasu"];
+export const NAME_VARIANTS = [PUBLISHED_NAME];
 
 /** Confirmed from the camera-ready byline, not inferred. */
 export const INSTITUTION = "Loyola-ICAM College of Engineering and Technology";

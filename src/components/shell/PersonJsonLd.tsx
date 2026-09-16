@@ -8,7 +8,6 @@ import {
   JOB_TITLE,
   DESCRIPTION,
   GIVEN_NAME,
-  FAMILY_NAME,
   NAME_VARIANTS,
   INSTITUTION,
   DEPARTMENT,
@@ -53,12 +52,11 @@ const personNode = {
   "@type": "Person",
   "@id": `${SITE_URL}/#person`,
   name: NAME,
-  // The legal name, split the way the passport splits it, plus every other
-  // string this person is published or documented under. Without these the
-  // site's "Kevin Andrew", the papers' "Kevin Andrew A" and the passport's
-  // "Kevin Andrew Arockia Arasu" read as three different people.
+  // No familyName — there isn't one, and ORCID's family-name field is blank
+  // for the same reason. givenName carries the whole name; alternateName
+  // carries the publication byline, so the site's "Kevin Andrew" and the
+  // papers' "Kevin Andrew A" resolve to one person rather than two.
   givenName: GIVEN_NAME,
-  familyName: FAMILY_NAME,
   alternateName: NAME_VARIANTS,
   url: SITE_URL,
   email: `mailto:${EMAIL}`,
