@@ -8,6 +8,7 @@ import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
 import { Rich } from "@/lib/rich";
 import { localeAlternates } from "@/lib/seo";
+import { ArticleJsonLd } from "@/components/shell/ArticleJsonLd";
 
 export function generateStaticParams() {
   return papers.map((p) => ({ slug: p.slug }));
@@ -49,6 +50,15 @@ export default async function PaperPage({
 
   return (
     <article className="container-column pt-36 pb-8">
+      <ArticleJsonLd
+        type="ScholarlyArticle"
+        headline={paper.title}
+        description={paper.oneLiner}
+        section="Research"
+        sectionPath="/research"
+        path={`/research/${slug}`}
+        locale={locale}
+      />
       <header>
         <p className="text-monosm text-text-3">
           {paper.domain} · {paper.status}

@@ -6,6 +6,7 @@ import { essays, getEssay } from "@/content/writing";
 import { Rich } from "@/lib/rich";
 import { Reveal } from "@/components/motion/Reveal";
 import { localeAlternates } from "@/lib/seo";
+import { ArticleJsonLd } from "@/components/shell/ArticleJsonLd";
 
 export function generateStaticParams() {
   return essays.map((e) => ({ slug: e.slug }));
@@ -41,6 +42,16 @@ export default async function EssayPage({
 
   return (
     <article className="container-column pt-36 pb-8">
+      <ArticleJsonLd
+        type="Article"
+        headline={essay.title}
+        description={essay.description}
+        section="Writing"
+        sectionPath="/writing"
+        path={`/writing/${slug}`}
+        published={essay.published}
+        locale={locale}
+      />
       <header>
         <p className="text-monosm text-text-3">
           {essay.published} · {essay.minutes} min

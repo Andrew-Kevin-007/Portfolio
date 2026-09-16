@@ -23,16 +23,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const all = [...staticPaths, ...dynamicPaths];
   const now = new Date();
 
+  // hreflang has to be reciprocal: a /de page that is index,follow and
+  // self-canonical must appear as its own <loc>, not only as an alternate
+  // hanging off the English one. Emitting EN-only made every de annotation
+  // one-way, which is the documented condition for Google discarding the
+  // whole cluster. Every entry now carries the same full language map,
+  // x-default included, so each URL points back at all the others.
+  const languages = (path: string) => ({
+    en: `${SITE_URL}${path}`,
+    de: `${SITE_URL}/de${path}`,
+    "x-default": `${SITE_URL}${path}`,
+  });
+
   return all.flatMap((path) => [
     {
       url: `${SITE_URL}${path}`,
       lastModified: now,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}${path}`,
-          de: `${SITE_URL}/de${path}`,
-        },
-      },
+      alternates: { languages: languages(path) },
+    },
+    {
+      url: `${SITE_URL}/de${path}`,
+      lastModified: now,
+      alternates: { languages: languages(path) },
     },
   ]);
 }

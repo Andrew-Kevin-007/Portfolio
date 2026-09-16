@@ -6,6 +6,7 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { FeaturedDock } from "@/components/sections/FeaturedDock";
 import { Doors } from "@/components/sections/Doors";
 import { localeAlternates } from "@/lib/seo";
+import { WebSiteJsonLd } from "@/components/shell/PersonJsonLd";
 
 export async function generateMetadata({
   params,
@@ -33,6 +34,7 @@ export default async function HomePage({
 
   return (
     <>
+      <WebSiteJsonLd />
       <Hero />
       <Manifesto />
       <FeaturedDock />

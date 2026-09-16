@@ -47,18 +47,16 @@ export async function generateMetadata({
       locale: locale === "de" ? "de_DE" : "en_US",
     },
     robots: { index: true, follow: true },
-    // logos/site-logo.png is the brand mark; site-logo-icon.png is the same
-    // image center-cropped to a square (the source is a 1122×1402 portrait,
-    // wrong shape for an icon slot) and favicon.ico is generated from that
-    // same crop, so every icon surface — tab, bookmarks, iOS home screen —
-    // shows one consistent mark. favicon.ico also keeps /favicon.ico a real
-    // 200 for crawlers/tools that request it by convention.
+    // Google Search supports exactly ONE favicon per hostname, so exactly one
+    // is declared. It stays at the stable /favicon.ico URL that Google's own
+    // guidance asks for — renaming it to bust a cache would forfeit whatever
+    // recognition that URL has. The `sizes="any"` hint is gone: that is the
+    // HTML signal for a scalable/vector resource and this is a raster .ico.
+    // apple-touch-icon is its own 180x180 file (Apple's largest useful size);
+    // it used to point at a 512x512 / 529 KB PNG.
     icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/logos/site-logo-icon.png", type: "image/png" },
-      ],
-      apple: "/logos/site-logo-icon.png",
+      icon: "/favicon.ico",
+      apple: "/logos/apple-touch-icon.png",
     },
   };
 }

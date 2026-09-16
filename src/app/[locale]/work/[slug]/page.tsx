@@ -8,6 +8,7 @@ import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
 import { Rich } from "@/lib/rich";
 import { localeAlternates } from "@/lib/seo";
+import { ArticleJsonLd } from "@/components/shell/ArticleJsonLd";
 
 export function generateStaticParams() {
   return studies.map((s) => ({ slug: s.slug }));
@@ -50,6 +51,15 @@ export default async function StudyPage({
 
   return (
     <article className="container-column pt-36 pb-8">
+      <ArticleJsonLd
+        type="Article"
+        headline={study.title}
+        description={study.oneLiner}
+        section="Work"
+        sectionPath="/work"
+        path={`/work/${slug}`}
+        locale={locale}
+      />
       <header>
         <p className="text-monosm text-text-3">
           {study.domain} · {study.years}

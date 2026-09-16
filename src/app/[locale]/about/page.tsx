@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { Expander } from "@/components/motion/Expander";
 import { EmailCopy } from "@/components/shell/EmailCopy";
+import { ProfilePageJsonLd } from "@/components/shell/PersonJsonLd";
 
 export async function generateMetadata({
   params,
@@ -54,6 +55,7 @@ export default async function AboutPage({
 
   return (
     <div className="container-column pt-36 pb-8">
+      <ProfilePageJsonLd />
       <header>
         <h1 className="text-display">
           {tn("about")}
