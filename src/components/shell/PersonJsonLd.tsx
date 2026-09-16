@@ -7,7 +7,11 @@ import {
   STUDIO_URL,
   JOB_TITLE,
   DESCRIPTION,
-  ALUMNI_OF,
+  GIVEN_NAME,
+  FAMILY_NAME,
+  NAME_VARIANTS,
+  INSTITUTION,
+  DEPARTMENT,
   NATIONALITY,
   LOCALITY,
   REGION,
@@ -49,13 +53,31 @@ const personNode = {
   "@type": "Person",
   "@id": `${SITE_URL}/#person`,
   name: NAME,
+  // The legal name, split the way the passport splits it, plus every other
+  // string this person is published or documented under. Without these the
+  // site's "Kevin Andrew", the papers' "Kevin Andrew A" and the passport's
+  // "Kevin Andrew Arockia Arasu" read as three different people.
+  givenName: GIVEN_NAME,
+  familyName: FAMILY_NAME,
+  alternateName: NAME_VARIANTS,
   url: SITE_URL,
   email: `mailto:${EMAIL}`,
   image: `${SITE_URL}/logos/site-logo.png`,
   description: DESCRIPTION,
   jobTitle: JOB_TITLE,
   worksFor: { "@id": `${SITE_URL}/#studio` },
-  alumniOf: { "@type": "CollegeOrUniversity", name: ALUMNI_OF },
+  // affiliation, not alumniOf — still enrolled. This is also the string on
+  // both paper bylines, so it is the join between the site and the DOIs.
+  affiliation: {
+    "@type": "CollegeOrUniversity",
+    name: INSTITUTION,
+    department: { "@type": "Organization", name: DEPARTMENT },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Chennai",
+      addressCountry: "IN",
+    },
+  },
   nationality: { "@type": "Country", name: NATIONALITY },
   address: {
     "@type": "PostalAddress",
