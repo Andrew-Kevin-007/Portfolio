@@ -5,12 +5,12 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/motion/Reveal";
-import { StudioHero } from "@/components/studio/StudioHero";
+import { StudioHero } from "./components/StudioHero";
 import { ScrollFill } from "@/components/studio/ScrollFill";
 import { Parallax } from "@/components/studio/Parallax";
-import { CompareBars } from "@/components/studio/CompareBars";
-import { FaqList } from "@/components/studio/FaqList";
-import { STUDIO_URL, EMAIL } from "@/content/site";
+import { CompareBars } from "./components/CompareBars";
+import { FaqList } from "./components/FaqList";
+import { EDITH_URL, EMAIL } from "@/content/site";
 
 export async function generateMetadata({
   params,
@@ -483,7 +483,7 @@ export default async function StudioPage({
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
-              href={STUDIO_URL}
+              href={EDITH_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="pill"
