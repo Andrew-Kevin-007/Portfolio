@@ -72,4 +72,4 @@ export const NATIONALITY = "India";
 export const LOCALITY = "Chennai";
 export const REGION = "Tamil Nadu";
 
-export const STUDIO_URL = "https://edithstudio.vercel.app";
+export const EDITH_URL = "https://edith-plum.vercel.app";

@@ -11,7 +11,6 @@ import { NAME } from "@/content/site";
 const LINKS = [
   { href: "/work", key: "work" },
   { href: "/research", key: "research" },
-  { href: "/studio", key: "studio" },
   { href: "/writing", key: "writing" },
   { href: "/about", key: "about" },
   { href: "/contact", key: "contact" },
@@ -69,17 +68,10 @@ export function Nav() {
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
 
-  // Studio's own hero is a fixed dark theatre, independent of the site
-  // theme (see .scene-dark in globals.css) — the nav rides on top of it,
-  // so it's pinned dark here too, regardless of the light/dark toggle.
-  const isStudio = pathname === "/studio" || pathname.startsWith("/studio/");
-
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-40 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isStudio ? "scene-dark" : ""
-        }`}
+        className="fixed inset-x-0 top-0 z-40 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
           transform: hidden && !open ? "translateY(-100%)" : "translateY(0)",
         }}
@@ -115,9 +107,7 @@ export function Nav() {
                     aria-current={isActive(href) ? "page" : undefined}
                     className={`text-[0.95rem] leading-normal transition-colors duration-300 ${
                       isActive(href)
-                        ? href === "/studio"
-                          ? "text-intel"
-                          : "text-text-1"
+                        ? "text-text-1"
                         : "text-text-3 hover:text-text-1"
                     }`}
                   >
@@ -158,9 +148,7 @@ export function Nav() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-30 flex flex-col justify-center bg-bg px-8 transition-opacity duration-[400ms] md:hidden ${
-          isStudio ? "scene-dark" : ""
-        }`}
+        className="fixed inset-0 z-30 flex flex-col justify-center bg-bg px-8 transition-opacity duration-[400ms] md:hidden"
         style={{
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
@@ -179,11 +167,7 @@ export function Nav() {
                 <Link
                   href={href}
                   className={`text-heading ${
-                    isActive(href)
-                      ? href === "/studio"
-                        ? "text-intel"
-                        : "text-text-1"
-                      : "text-text-2"
+                    isActive(href) ? "text-text-1" : "text-text-2"
                   }`}
                 >
                   {t(key)}

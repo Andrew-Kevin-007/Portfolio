@@ -29,7 +29,6 @@ export async function Footer() {
                 [
                   ["/work", "work"],
                   ["/research", "research"],
-                  ["/studio", "studio"],
                   ["/writing", "writing"],
                 ] as const
               ).map(([href, key]) => (

@@ -6,6 +6,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Expander } from "@/components/motion/Expander";
 import { EmailCopy } from "@/components/shell/EmailCopy";
 import { ProfilePageJsonLd } from "@/components/shell/PersonJsonLd";
+import { EDITH_URL } from "@/content/site";
 
 export async function generateMetadata({
   params,
@@ -23,7 +24,7 @@ export async function generateMetadata({
 }
 
 const STOPS = [
-  { key: "stop1", org: "Edith Studio", href: "/studio" },
+  { key: "stop1", org: "Edith", href: EDITH_URL },
   { key: "stop2", org: "Bluestock" },
   { key: "stop3", org: "SmartBridge × Google" },
   { key: "stop4", org: "Raditon Intelligence" },
@@ -83,10 +84,15 @@ export default async function AboutPage({
           <Reveal delay={0.09}>
             <p className="max-w-[58ch] text-bodylg text-text-2">
               {t.rich("how2", {
-                studio: (chunks) => (
-                  <Link href="/studio" className="text-intel">
+                edith: (chunks) => (
+                  <a
+                    href={EDITH_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-intel"
+                  >
                     {chunks}
-                  </Link>
+                  </a>
                 ),
               })}
             </p>
@@ -147,9 +153,14 @@ export default async function AboutPage({
               <div>
                 <h4 className="text-title text-text-1">
                   {"href" in s ? (
-                    <Link href={s.href} className="whitespace-nowrap text-intel">
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="whitespace-nowrap text-intel"
+                    >
                       {s.org}
-                    </Link>
+                    </a>
                   ) : (
                     <span className="whitespace-nowrap">{s.org}</span>
                   )}

@@ -7,7 +7,7 @@
     "research": "Formal research on code provenance, LLM inference scheduling and multilingual knowledge-graph population: the problems, the approach, and the open questions behind the papers.",
     "studio": "Edith Studio — a small design and engineering practice by Kevin Andrew. Products and AI systems that simply work, built end to end for select clients.",
     "writing": "Essays and notes by Kevin Andrew — on building, becoming, and the gap between who you are and what you're building.",
-    "about": "Kevin Andrew — engineer, founder of Edith Studio, and researcher. A curiosity that never sits still: building, writing, and chasing ideas end to end.",
+    "about": "Kevin Andrew — engineer, founder of Edith, and researcher. A curiosity that never sits still: building, writing, and chasing ideas end to end.",
     "contact": "Get in touch with Kevin Andrew — client work, research, collaborations, or just to say hello. Replies usually within a day."
   },
   "nav": {
@@ -46,10 +46,9 @@
     "doorsWritingBody": "Mostly notes to myself. Maybe they'll help you too.",
     "doorsResearchTitle": "Research",
     "doorsResearchBody": "Some problems need more than code. Formal work on provenance, inference scheduling and multilingual knowledge graphs, plus the open questions behind it.",
-    "doorsStudioTitle": "Studio",
-    "doorsStudioBody": "A small practice for people who need systems that simply work. Select client work, and how it runs.",
-    "now2": "<b>Two papers</b> accepted in 2026, with IEEE and Springer.",
-    "now3": "<b>Edith Studio</b> is open for select client engagements."
+    "doorsEdithTitle": "Edith",
+    "doorsEdithBody": "A legion of builders that runs itself. Build. Contribute. Evolve.",
+    "now2": "<b>Two papers</b> accepted in 2026, with IEEE and Springer."
   },
   "work": {
     "title": "Work",
@@ -72,7 +71,7 @@
     "short": "Hey again! It's me, Kevin. I'm just a friendly neighbourhood guy who loves <b>chasing ideas</b>. Most days begin with coffee, music, and the promise that I'll <b>\"only read one article.\"</b> A few hours later, I'm knee-deep in research papers, design inspiration, random Wikipedia pages, or documentation that somehow sparked another idea worth building. I like looking at the world through both <b>logic and creativity</b> because, in my experience, <b>the best ideas usually live somewhere in between</b>.",
     "howHeading": "A curiosity that never sits still",
     "how1": "Building has always been my favourite way of learning.",
-    "how2": "Over the years, that mindset has taken me from side projects to founding <studio>Edith Studio</studio>, where I design and build products for clients across different parts of the world. Every collaboration has reinforced the same lesson: great products aren't built by adding more—they're built by understanding what truly matters.",
+    "how2": "Over the years, that mindset has taken me from side projects to founding <edith>Edith</edith>, where I design and build products for clients across different parts of the world. Every collaboration has reinforced the same lesson: great products aren't built by adding more—they're built by understanding what truly matters.",
     "how3": "See how Etch grew from a late-night question into a cryptographic protocol.",
     "how4": "Alongside client work, research has quietly become a second home. I enjoy investigating ideas that sit between software engineering, distributed systems, AI, and design, then turning them into something people can actually use, read, or build upon.",
     "how5": "When I'm not working with clients or writing papers, I'm probably chasing another idea that started with \"I wonder if...\"",

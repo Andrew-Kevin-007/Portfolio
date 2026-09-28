@@ -4,7 +4,7 @@ import {
   EMAIL,
   SOCIAL,
   SCHOLAR,
-  STUDIO_URL,
+  EDITH_URL,
   JOB_TITLE,
   DESCRIPTION,
   GIVEN_NAME,
@@ -22,7 +22,7 @@ import {
  * Three nodes, linked by @id so crawlers read one graph rather than three
  * unrelated blobs:
  *   #person   who this is                (sitewide, in the layout)
- *   #studio   the org he works for       (sitewide, in the layout)
+ *   #edith    the org he works for       (sitewide, in the layout)
  *   #website  what this domain is        (home page only — see WebSiteJsonLd)
  *   ProfilePage                          (/about only — see ProfilePageJsonLd)
  *
@@ -63,7 +63,7 @@ const personNode = {
   image: `${SITE_URL}/logos/site-logo.png`,
   description: DESCRIPTION,
   jobTitle: JOB_TITLE,
-  worksFor: { "@id": `${SITE_URL}/#studio` },
+  worksFor: { "@id": `${SITE_URL}/#edith` },
   // affiliation, not alumniOf — still enrolled. This is also the string on
   // both paper bylines, so it is the join between the site and the DOIs.
   affiliation: {
@@ -93,11 +93,11 @@ const personNode = {
   sameAs: sameAs(),
 };
 
-const studioNode = {
+const edithNode = {
   "@type": "Organization",
-  "@id": `${SITE_URL}/#studio`,
-  name: "Edith Studio",
-  url: STUDIO_URL,
+  "@id": `${SITE_URL}/#edith`,
+  name: "Edith",
+  url: EDITH_URL,
   founder: { "@id": `${SITE_URL}/#person` },
 };
 
@@ -114,7 +114,7 @@ function ld(data: unknown) {
 export function PersonJsonLd() {
   return ld({
     "@context": "https://schema.org",
-    "@graph": [personNode, studioNode],
+    "@graph": [personNode, edithNode],
   });
 }
 

@@ -1,4 +1,4 @@
-import { NAME, SITE_URL } from "@/content/site";
+import { NAME, SITE_URL, EDITH_URL } from "@/content/site";
 import { studies } from "@/content/work";
 import { essays } from "@/content/writing";
 import { papers } from "@/content/research";
@@ -54,9 +54,9 @@ Papers and formal work — same honesty rules as the case studies.
 
 ${research}
 
-## Studio
+## Edith
 
-- [Studio](${SITE_URL}/studio): Edith Studio — product and systems work for real businesses.
+- [Edith](${EDITH_URL}): A legion of builders that runs itself — build, contribute, evolve.
 
 ## Optional
 

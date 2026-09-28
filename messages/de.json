@@ -7,7 +7,7 @@
     "research": "Formale Forschung zu Code-Provenienz, LLM-Inferenz-Scheduling und mehrsprachiger Knowledge-Graph-Population: die Probleme, der Ansatz und die offenen Fragen hinter den Papern.",
     "studio": "Edith Studio — eine kleine Design- und Engineering-Praxis von Kevin Andrew. Produkte und KI-Systeme, die einfach funktionieren, vollständig umgesetzt.",
     "writing": "Essays und Notizen von Kevin Andrew — über das Bauen, das Werden und die Lücke zwischen dem, wer du bist, und dem, was du baust.",
-    "about": "Kevin Andrew — Ingenieur, Gründer von Edith Studio und Forscher. Eine Neugier, die nie stillsteht: bauen, schreiben und Ideen vollständig verfolgen.",
+    "about": "Kevin Andrew — Ingenieur, Gründer von Edith und Forscher. Eine Neugier, die nie stillsteht: bauen, schreiben und Ideen vollständig verfolgen.",
     "contact": "Kontakt zu Kevin Andrew — Kundenarbeit, Forschung, Zusammenarbeit oder einfach nur Hallo sagen. Antwort meist innerhalb eines Tages."
   },
   "nav": {
@@ -46,10 +46,9 @@
     "doorsWritingBody": "Meist Notizen an mich selbst. Vielleicht helfen sie auch dir.",
     "doorsResearchTitle": "Forschung",
     "doorsResearchBody": "Manche Probleme brauchen mehr als Code. Formale Arbeit zu Provenienz, Inferenz-Scheduling und mehrsprachigen Knowledge Graphs, dazu die offenen Fragen dahinter.",
-    "doorsStudioTitle": "Studio",
-    "doorsStudioBody": "Eine kleine Praxis für Menschen, die Systeme brauchen, die einfach funktionieren. Ausgewählte Kundenarbeit, und wie sie läuft.",
-    "now2": "<b>Zwei Paper</b> wurden 2026 angenommen, bei IEEE und Springer.",
-    "now3": "<b>Edith Studio</b> ist offen für ausgewählte Kundenprojekte."
+    "doorsEdithTitle": "Edith",
+    "doorsEdithBody": "Eine Legion von Machern, die sich selbst am Laufen hält. Bauen. Beitragen. Weiterentwickeln.",
+    "now2": "<b>Zwei Paper</b> wurden 2026 angenommen, bei IEEE und Springer."
   },
   "work": {
     "title": "Arbeit",
@@ -72,7 +71,7 @@
     "short": "Hey, schon wieder ich — Kevin. Ich bin einfach ein freundlicher Typ von nebenan, der <b>Ideen jagt</b>. Die meisten Tage beginnen mit Kaffee, Musik und dem Versprechen, <b>„nur einen Artikel zu lesen.“</b> Ein paar Stunden später stecke ich tief in Forschungspapieren, Design-Inspiration, wahllosen Wikipedia-Seiten oder Dokumentationen, die irgendwie eine weitere Idee zum Bauen ausgelöst haben. Ich betrachte die Welt gern durch <b>Logik und Kreativität</b> zugleich — meiner Erfahrung nach <b>leben die besten Ideen meist irgendwo dazwischen</b>.",
     "howHeading": "Eine Neugier, die nie stillsteht",
     "how1": "Bauen war schon immer meine liebste Art zu lernen.",
-    "how2": "Über die Jahre hat mich diese Haltung von Nebenprojekten bis zur Gründung von <studio>Edith Studio</studio> gebracht, wo ich Produkte für Kunden auf der ganzen Welt designe und baue. Jede Zusammenarbeit hat dieselbe Lektion bestätigt: großartige Produkte entstehen nicht durch Hinzufügen — sondern dadurch, zu verstehen, was wirklich zählt.",
+    "how2": "Über die Jahre hat mich diese Haltung von Nebenprojekten bis zur Gründung von <edith>Edith</edith> gebracht, wo ich Produkte für Kunden auf der ganzen Welt designe und baue. Jede Zusammenarbeit hat dieselbe Lektion bestätigt: großartige Produkte entstehen nicht durch Hinzufügen — sondern dadurch, zu verstehen, was wirklich zählt.",
     "how3": "Sieh, wie Etch aus einer späten Frage zu einem kryptografischen Protokoll wurde.",
     "how4": "Neben der Kundenarbeit ist Forschung still zu einer zweiten Heimat geworden. Ich untersuche gerne Ideen, die zwischen Software-Engineering, verteilten Systemen, KI und Design liegen, und mache daraus etwas, das Menschen tatsächlich nutzen, lesen oder darauf aufbauen können.",
     "how5": "Wenn ich nicht mit Kunden arbeite oder Paper schreibe, jage ich wahrscheinlich einer anderen Idee nach, die mit „Ich frage mich, ob …“ begonnen hat.",
