@@ -38,6 +38,7 @@
     "workKeynoteBody": "Nur ein paar Ecken des Internets, in denen ich lese, schreibe, lerne und ab und zu für ein paar Stunden verschwinde.",
     "featuredTitle": "Featured",
     "featuredSub": "STEM — Produktionsklone ohne Blast Radius",
+    "featuredShipped": "Eine der Ideen, die wirklich live gegangen sind →",
     "moreWork": "Weitere Arbeiten ansehen →",
     "manifestoLabel": "Die Schleife",
     "manifesto": "Das Problem bemerken. Es befragen, bis es die Struktur preisgibt. Das System bauen. Aufschreiben. Wiederholen, bis es sich verzinst.",
@@ -47,7 +48,8 @@
     "doorsResearchTitle": "Forschung",
     "doorsResearchBody": "Manche Probleme brauchen mehr als Code. Formale Arbeit zu Provenienz, Inferenz-Scheduling und mehrsprachigen Knowledge Graphs, dazu die offenen Fragen dahinter.",
     "doorsEdithTitle": "Edith",
-    "doorsEdithBody": "Eine Legion von Machern, die sich selbst am Laufen hält. Bauen. Beitragen. Weiterentwickeln.",
+    "doorsEdithBody": "Eine Legion von Machern, die sich selbst am Laufen hält.",
+    "doorsEdithSub": "Bauen. Beitragen. Weiterentwickeln.",
     "now2": "<b>Zwei Paper</b> wurden 2026 angenommen, bei IEEE und Springer."
   },
   "work": {

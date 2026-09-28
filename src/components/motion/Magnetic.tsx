@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import gsap from "gsap";
 
 /**
  * Subtle magnetic pull toward the cursor (≤4px) — fine pointers only.
- * Physics, not decoration: quick attract, springy release.
+ * Physics, not decoration: quick attract, springy release. Plain CSS
+ * transitions; the release overshoots once, like a spring letting go.
  */
 export function Magnetic({
   children,
@@ -27,18 +27,18 @@ export function Magnetic({
     )
       return;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "expo.out" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "expo.out" });
-
     const move = (e: MouseEvent) => {
       const r = el.getBoundingClientRect();
       const relX = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
       const relY = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-      xTo(Math.max(-1, Math.min(1, relX)) * strength);
-      yTo(Math.max(-1, Math.min(1, relY)) * strength);
+      const x = Math.max(-1, Math.min(1, relX)) * strength;
+      const y = Math.max(-1, Math.min(1, relY)) * strength;
+      el.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
+      el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
     };
     const leave = () => {
-      gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
+      el.style.transition = "transform 0.7s cubic-bezier(0.34, 1.8, 0.64, 1)";
+      el.style.transform = "translate(0, 0)";
     };
 
     el.addEventListener("mousemove", move);
@@ -46,6 +46,8 @@ export function Magnetic({
     return () => {
       el.removeEventListener("mousemove", move);
       el.removeEventListener("mouseleave", leave);
+      el.style.transition = "";
+      el.style.transform = "";
     };
   }, [strength]);
 

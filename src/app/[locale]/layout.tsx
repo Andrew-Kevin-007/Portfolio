@@ -94,9 +94,6 @@ export default async function LocaleLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
-        <noscript>
-          <style>{`[data-reveal]{opacity:1 !important}`}</style>
-        </noscript>
       </head>
       <body>
         <PersonJsonLd />

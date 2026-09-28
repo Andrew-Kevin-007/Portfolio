@@ -1,0 +1,329 @@
+// GLSL of the edith hero marble, copied verbatim from edith's lib/gl/shaders.ts. Do not edit; re-run prepare-assets to refresh.
+
+// GLSL of the original WebGL layer, extracted verbatim from the production bundle.
+
+// postprocessing BlendFunction.COLOR (BlendMode#getShaderCode)
+export const blendColorGlsl =
+  "vec4 blend(const in vec4 dst,const in vec4 src,const in float opacity){vec3 a=RGBToHSL(dst.rgb);vec3 b=RGBToHSL(src.rgb);vec3 c=HSLToRGB(vec3(b.xy,a.z));return mix(dst,vec4(c,max(dst.a,src.a)),opacity);}";
+
+export const mapGlsl = `float map(float value, float min1, float max1, float min2, float max2) {
+  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}`;
+
+export const blendOverlayGlsl = `float blendOverlay(float base, float blend) {
+  return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend));
+}
+
+vec3 blendOverlay(vec3 base, vec3 blend) {
+  return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b));
+}
+
+vec3 blendOverlay(vec3 base, vec3 blend, float opacity) {
+  return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
+}`;
+
+export const hslGlsl = `#ifndef EPSILON
+  #define EPSILON 1e-10
+#endif
+
+vec3 RGBToHCV(const in vec3 RGB) {
+	vec4 P = mix(vec4(RGB.bg, -1.0, 2.0 / 3.0), vec4(RGB.gb, 0.0, -1.0 / 3.0), step(RGB.b, RGB.g));
+	vec4 Q = mix(vec4(P.xyw, RGB.r), vec4(RGB.r, P.yzx), step(P.x, RGB.r));
+	float C = Q.x - min(Q.w, Q.y);
+	float H = abs((Q.w - Q.y) / (6.0 * C + EPSILON) + Q.z);
+	return vec3(H, C, Q.x);
+}
+
+vec3 RGBToHSL(const in vec3 RGB) {
+	vec3 HCV = RGBToHCV(RGB);
+	float L = HCV.z - HCV.y * 0.5;
+	float S = HCV.y / (1.0 - abs(L * 2.0 - 1.0) + EPSILON);
+	return vec3(HCV.x, S, L);
+}
+
+vec3 HueToRGB(const in float H) {
+	float R = abs(H * 6.0 - 3.0) - 1.0;
+	float G = 2.0 - abs(H * 6.0 - 2.0);
+	float B = 2.0 - abs(H * 6.0 - 4.0);
+	return clamp(vec3(R, G, B), 0.0, 1.0);
+}
+
+vec3 HSLToRGB(const in vec3 HSL) {
+	vec3 RGB = HueToRGB(HSL.x);
+	float C = (1.0 - abs(2.0 * HSL.z - 1.0)) * HSL.y;
+	return (RGB - 0.5) * C + HSL.z;
+}`;
+
+export const coverUvGlsl = `vec2 coverUv(vec2 uv, vec2 size, vec2 resolution) {
+    vec2 ratio = vec2(
+        min((resolution.x / resolution.y) / (size.x / size.y), 1.0),
+        min((resolution.y / resolution.x) / (size.y / size.x), 1.0)
+    );
+
+    return vec2(
+        uv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+        uv.y * ratio.y + (1.0 - ratio.y) * 0.5
+    );
+}`;
+
+export const scaleFromPointGlsl = `vec2 scaleFromPoint(vec2 uv, float scale, vec2 point) {
+    vec2 scaledUV = (uv - point) * scale + point;
+    return scaledUV;
+}`;
+
+export const saturationGlsl = `vec3 saturation(vec3 rgb, float adjustment) {
+  const vec3 W = vec3(0.2125, 0.7154, 0.0721);
+  vec3 intensity = vec3(dot(rgb, W));
+  return mix(intensity, rgb, adjustment);
+}`;
+
+export const blendScreenGlsl = `float blendScreen(float base, float blend) {
+  return 1.0-((1.0-base)*(1.0-blend));
+}
+
+vec3 blendScreen(vec3 base, vec3 blend) {
+  return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b));
+}
+
+vec3 blendScreen(vec3 base, vec3 blend, float opacity) {
+  return (blendScreen(base, blend) * opacity + base * (1.0 - opacity));
+}`;
+
+
+export const fullscreenVertex = `
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position.xy, 0.0, 1.0);
+  }
+`;
+
+export const planeVertex = `
+  varying vec2 vUv;
+
+  void main(){
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+    vUv = uv;
+  }
+`;
+
+export const marbleFragment = `
+  uniform float uScrollProgress;
+  uniform float uAlpha;
+  uniform float uExpand;
+  uniform float uDim;
+  uniform float vUvScale;
+  uniform float uBoostFactor;
+  uniform float uBoostReveal;
+  uniform float uSaturation;
+  uniform vec2 uMouse;
+  uniform vec2 uPlane;
+  uniform vec3 uTime; // [reveal, boost, elapsed]
+  uniform vec3 uResolution;
+  uniform vec3 uMouseProps; // [radius, strength, boostFactor]
+  uniform sampler2D uTxt;
+  uniform sampler2D uTxtLoop;
+  uniform sampler2D uGradientTxt;
+  uniform sampler2D uTxtMask;
+  uniform sampler2D uMaskSelection;
+  uniform sampler2D uMaskTime;
+  uniform sampler2D uNoiseTxt;
+
+  varying vec2 vUv;
+
+  ${hslGlsl}
+  ${blendColorGlsl}
+  ${coverUvGlsl}
+  ${scaleFromPointGlsl}
+  ${saturationGlsl}
+  ${blendScreenGlsl}
+
+  float vignette(vec2 _uv, float _threshold){
+    float h = min(smoothstep(0.0, _threshold, _uv.x), smoothstep(1.0, 1.0 - _threshold, _uv.x));
+    float v = min(smoothstep(0.0, _threshold, _uv.y), smoothstep(1.0, 1.0 - _threshold, _uv.y));
+    return pow(min(h,v), 2.0);
+  }
+
+  float fadeEdge(float _prog){
+    float enter = smoothstep(0.0, 0.1, _prog);
+    float exit = smoothstep(1.0, 0.9, _prog);
+    return min(enter, exit);
+  }
+
+  void main(){
+    vec2 nUv = scaleFromPoint(vUv, vUvScale, vec2(0.5));
+    vec2 st = gl_FragCoord.xy / (uResolution.xy * uResolution.z);
+
+    nUv = coverUv(nUv, vec2(textureSize(uTxt, 0).xy), uPlane);
+
+    float noise1 = texture(uNoiseTxt, (nUv * 1.4) + vec2(uTime.z * 0.2 * 0.1, 0.0)).r;
+    float noise2 = texture(uNoiseTxt, (nUv * 2.4) + vec2(-uTime.z * 0.2 * 0.1, 0.0 )).r;
+    float noise = (noise1 + noise2) * 0.5;
+
+    // GRADIENT
+    vec3 gradientColor = texture(uGradientTxt, nUv + vec2(-uTime.z* 0.1, -uTime.z* 0.1)).rgb;
+
+    //LOOP
+    vec4 loopTexture = texture(uTxtLoop, nUv);
+    loopTexture = blend(loopTexture, vec4(gradientColor, 1.0), 1.0);
+    loopTexture *= noise;
+
+    // MOUSE
+    vec2 fragUv = st;
+    vec2 mouseUv = uMouse * 0.5 + 0.5;
+    vec2 d = (fragUv - mouseUv);
+    d.x *= uResolution.x / uResolution.y;
+    // d += vec2(noise * 0.1);
+    float mouseDist = length(d) - pow(noise, 3.0) * 0.2;
+    float mouseRadius = uMouseProps.x;
+    float mouseHardness = 0.00;
+    float dd = smoothstep(mouseRadius * mouseHardness, mouseRadius, mouseDist);
+    dd = pow(dd, 0.85);
+    float mouseCircle = (1.0 - dd) * 2.0 - 1.0;
+    mouseCircle = smoothstep(0.0, 1.0, noise + mouseCircle);
+    mouseCircle = pow(mouseCircle, 4.0);
+
+    // MARBLE
+    vec4 final = texture(uTxt, nUv);
+    final = blend(final, vec4(gradientColor, 1.0), 1.0);
+    vec4 colorTxt = final;
+
+    float cut = pow(final.r, 0.5);
+
+    float mask = texture(uTxtMask, nUv).r;
+    float selection = texture(uMaskSelection, nUv).g;
+    float timeShift = texture(uMaskTime, nUv).b;
+
+    float shiftedTimeIntro = uTime.x * 0.3;
+    shiftedTimeIntro = clamp(shiftedTimeIntro - timeShift * 1.0 - 0.05, 0.0, 100000.0);
+
+    float mtReveal = mod(shiftedTimeIntro, 1.0);
+    float mtBoost = mod(uTime.y * 0.3 + timeShift * 5.0, 1.0);
+
+    // MAIN REVEAL
+    float fadeBoost = fadeEdge(mtBoost);
+    float fadeReveal = fadeEdge(mtReveal);
+    float edge = 0.04;
+
+    float phase = step(0.5, mtReveal); // 0: reveal, 1: hide
+    float t = fract(mtReveal * 2.0);   // 0..1 within each phase
+
+    float th = t - edge;
+    float reveal = 1.0 - smoothstep(th, th + edge, mask); // 0->1 (L->R)
+    float hide = smoothstep(th, th + edge, mask);         // 1->0 (L->R)
+
+    float maskReveal = mix(reveal, hide, phase) * smoothstep(0.0, 0.1, mask);
+    float revealEdge = 1.0 - smoothstep(0.0 + mtReveal, 0.03 + mtReveal, mask);
+    maskReveal += sin(revealEdge * 3.14) * uBoostReveal * cut * fadeReveal;
+
+    // COLOR BOOST
+    float maskBoost = 1.0 - smoothstep(0.0 + mtBoost, 0.03 + mtBoost, mask);
+    maskBoost *= selection;
+    maskBoost = clamp(maskBoost, 0.0, 1.0);
+
+    float boost = sin(maskBoost * 3.14) * uBoostFactor * cut * fadeBoost;
+    final.rgb *= (1.0 + boost);
+    final.rgb *= maskReveal;
+
+    // final.rgb = mix(final.rgb, colorTxt.rgb * (1.0 + uMouseProps.z * cut), mouseCircle * uMouseProps.y * clamp(shiftedTimeIntro, 0.0, 1.0));
+    final.rgb *= vignette(vUv, 0.1 * (1.0 - uScrollProgress));
+
+    final.rgb = blendScreen(saturation(loopTexture.rgb, uSaturation), final.rgb, 1.0);
+    // The blackout is what turns the landed marble into the carousel's box. Grown
+    // back out to the section it is a background again, so the texture returns.
+    final.rgb = mix(final.rgb, vec3(0.0), uScrollProgress * (1.0 - uExpand));
+
+    final.rgb *= uDim;
+
+    final.a *= uAlpha;
+
+    gl_FragColor = final;
+
+    // DEBUG
+    // gl_FragColor = texture(uTxtLoop, nUv);;
+    // gl_FragColor = vec4(vec3(1.0, 0.0, 1.0), 1.0);
+
+    #include <tonemapping_fragment>
+	  #include <colorspace_fragment>
+  }
+`;
+
+export const raysFragment = `
+  uniform sampler2D uTxt;
+  uniform sampler2D uNoise;
+  uniform vec2 uMouse;
+  uniform float uIntensity;
+  uniform float uTime;
+  uniform float uOffsetScale;
+  uniform float uDecayRate;
+  uniform float uMixFactor;
+  uniform float uClampMax;
+
+  varying vec2 vUv;
+
+  float screenNoise(vec2 pixCoord){
+    const vec3 magic = vec3(0.06711056f, 0.00583715f, 52.9829189f);
+
+    vec2 frameMagicScale = vec2(2.083f, 4.867f);
+    pixCoord += float(0.0) * frameMagicScale;
+
+    return fract(magic.z * fract(dot(pixCoord, magic.xy)));
+}
+
+  void main(){
+      float intensity = uIntensity;
+      float offsetScale = uOffsetScale;
+      float decayRate = uDecayRate;
+      float mixFactor = uMixFactor;
+      float clampMax = uClampMax;
+
+      float noise = texture2D(uNoise, (vUv * 0.2) + vec2(uTime * 0.2 * 0.02, 0.0)).r;
+      float bn = noise;
+      noise = noise * 2.0 - 1.0;
+
+      vec2 mCoord = uMouse * 0.5 + 0.5;
+      vec2 centerCoord = mCoord;
+
+      vec2 fragUv = vUv;
+      vec2 mouseUv = mCoord;
+      vec2 d = (fragUv - mouseUv);
+      d.x *= float(textureSize(uTxt, 0).x) / float(textureSize(uTxt, 0).y);
+      // d += vec2(noise * 0.1);
+      float mouseDist = length(d - noise * 0.1);
+      float mouseRadius = 0.35;
+      float mouseHardness = 0.2;
+      float dd = smoothstep(mouseRadius * mouseHardness, mouseRadius, mouseDist);
+      dd = pow(dd, 0.85);
+      float mouseCircle = (1.0 - dd) * 2.0 - 1.0;
+      mouseCircle = smoothstep(0.0, 1.0, mouseCircle);
+      mouseCircle = pow(mouseCircle, 4.0);
+
+      // Initialize variables
+      vec4 accumulatedColor = vec4(0.0, 0.0, 0.0, 1.0);
+      float currentIntensity = 1.0;
+      vec2 currentCoord = vUv;
+      vec2 offset = (vUv - centerCoord) * (0.05 * offsetScale);
+      vec4 first = texture2D(uTxt, vUv);
+
+      // Perform iterative sampling
+      for (int i = 0; i < 20; i++) {
+          float stNoise = screenNoise(gl_FragCoord.xy * 3.0);
+          currentCoord -= offset + stNoise * 0.00001 + noise * 0.0005;
+          vec4 txt = texture2D(uTxt, currentCoord);
+          txt.rgb = pow(txt.rgb, vec3(1.45)) * (1.2 - bn * 0.5);
+          accumulatedColor += txt * (currentIntensity * mixFactor * mouseCircle);
+          currentIntensity *= decayRate;
+      }
+
+      accumulatedColor *= intensity;
+
+      // Clamp the final color
+      vec4 clampedColor = clamp(accumulatedColor, 0.0, clampMax);
+      clampedColor.rgb = mix(clampedColor.rgb, clampedColor.rgb * 0.15, smoothstep(0.0, 0.1, (first.r + first.g + first.b) / 3.0));
+
+      // Set the final fragment color
+      gl_FragColor = clampedColor;
+  }
+`;

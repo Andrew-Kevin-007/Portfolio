@@ -14,10 +14,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.documentElement.classList.add("no-motion");
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const lenis = new Lenis({
       duration: 1.25,

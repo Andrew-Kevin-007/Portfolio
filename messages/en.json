@@ -38,6 +38,7 @@
     "workKeynoteBody": "Just a few corners of the internet where I read, write, learn, and occasionally disappear for a few hours.",
     "featuredTitle": "Featured",
     "featuredSub": "STEM — cloning production without the blast radius",
+    "featuredShipped": "One of the ideas that actually shipped →",
     "moreWork": "See more work →",
     "manifestoLabel": "It starts with a question",
     "manifesto": "I don't really have a process. I notice something, get obsessed with it for a while, build until it works, write down what I learned, and then accidentally find the next thing to obsess over.",
@@ -47,7 +48,8 @@
     "doorsResearchTitle": "Research",
     "doorsResearchBody": "Some problems need more than code. Formal work on provenance, inference scheduling and multilingual knowledge graphs, plus the open questions behind it.",
     "doorsEdithTitle": "Edith",
-    "doorsEdithBody": "A legion of builders that runs itself. Build. Contribute. Evolve.",
+    "doorsEdithBody": "A legion of builders that runs itself.",
+    "doorsEdithSub": "Build. Contribute. Evolve.",
     "now2": "<b>Two papers</b> accepted in 2026, with IEEE and Springer."
   },
   "work": {

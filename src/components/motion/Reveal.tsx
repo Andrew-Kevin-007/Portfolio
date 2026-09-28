@@ -1,14 +1,15 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import gsap from "gsap";
+
+const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 /**
- * Reveal v2 — content-first choreography.
- * Fast (0.6s), small travel (14px), NO blur (blur mid-flight reads as a bug,
- * and content must never lag the reader). Elements already in the viewport
- * at mount animate immediately; everything else on first intersection.
- * Tweens are killed on unmount; overwrite guards double-fires (StrictMode).
+ * Reveal v3 — content-first choreography, no animation library.
+ * Content is visible in the server HTML, so nothing on screen waits for
+ * JavaScript. Only elements that start below the fold are hidden (at mount,
+ * while off screen, so the reader never sees them vanish) and rise in on
+ * first intersection: 0.6s, 14px of travel, no blur.
  */
 export function Reveal({
   children,
@@ -28,51 +29,33 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.opacity = "1";
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const play = () => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay,
-          ease: "expo.out",
-          overwrite: "auto",
-          clearProps: "transform",
-        }
-      );
-    };
-
-    // Already on screen (above the fold / fast navigation)? Don't make the
-    // reader wait for an observer round-trip.
     const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight && r.bottom > 0) {
-      play();
-      return () => {
-        gsap.killTweensOf(el);
-      };
-    }
+    if (r.top < window.innerHeight && r.bottom > 0) return;
 
+    el.style.opacity = "0";
+    let anim: Animation | undefined;
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          play();
-          io.unobserve(el);
-        });
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        el.style.opacity = "";
+        anim = el.animate(
+          [
+            { opacity: 0, transform: `translateY(${y}px)` },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 600, delay: delay * 1000, easing: EASE, fill: "backwards" }
+        );
       },
       { rootMargin: "0px 0px -6% 0px" }
     );
     io.observe(el);
     return () => {
       io.disconnect();
-      gsap.killTweensOf(el);
+      anim?.cancel();
+      el.style.opacity = "";
     };
   }, [delay, y]);
 

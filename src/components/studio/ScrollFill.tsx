@@ -41,7 +41,6 @@ export function ScrollFill({
       raf = requestAnimationFrame(tick);
       const r = root.getBoundingClientRect();
       const vh = window.innerHeight;
-      if (r.top > vh + 100 || r.bottom < -100) return;
 
       // fill runs while the block travels from 88% to 38% of the viewport
       const target = clamp((vh * 0.88 - r.top) / (vh * 0.5), 0, 1);
@@ -54,9 +53,24 @@ export function ScrollFill({
         spans[i].style.opacity = (0.16 + o * 0.84).toFixed(3);
       }
     };
-    raf = requestAnimationFrame(tick);
+    // the loop runs only while the block is near the viewport
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!raf) raf = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "100px 0px" }
+    );
+    io.observe(root);
 
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, [words]);
 
   return (

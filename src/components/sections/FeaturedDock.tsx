@@ -56,6 +56,19 @@ export function FeaturedDock() {
     )
       return;
 
+    // Nothing downloads at page load (preload="none", the poster stands in).
+    // The theater sits right under the hero, so the first scroll is the
+    // signal: a visitor who leaves from the hero never pays for the film,
+    // and anyone reading on has it streaming before it fills the screen.
+    const warmUp = () => {
+      window.removeEventListener("scroll", warmUp);
+      if (video.readyState > 0 || !video.paused) return;
+      video.preload = "auto";
+      video.load();
+    };
+    if (window.scrollY > 0) warmUp();
+    else window.addEventListener("scroll", warmUp, { passive: true });
+
     // footage decodes only while the theater is on screen, and survives
     // tab switches (IO alone misses the visibility hand-off)
     let onScreen = false;
@@ -89,18 +102,20 @@ export function FeaturedDock() {
       cap.style.pointerEvents = "auto";
       scrim.style.opacity = "0";
       return () => {
+        window.removeEventListener("scroll", warmUp);
         io.disconnect();
         document.removeEventListener("visibilitychange", onVis);
       };
     }
 
+    // The scroll choreography runs only while the section is near the
+    // viewport; everywhere else on the page it costs nothing.
     let raf = 0;
     const tick = () => {
       raf = requestAnimationFrame(tick);
       const sec = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const vw = window.innerWidth;
-      if (sec.bottom < -100 || sec.top > vh + 100) return;
 
       const p = clamp(-sec.top / (sec.height - vh), 0, 1);
 
@@ -144,10 +159,23 @@ export function FeaturedDock() {
       cap.style.transform = `translateY(${((1 - cp) * 14).toFixed(1)}px)`;
       cap.style.pointerEvents = cp > 0.5 ? "auto" : "none";
     };
-    raf = requestAnimationFrame(tick);
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!raf) raf = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "100px 0px" }
+    );
+    near.observe(section);
 
     return () => {
       cancelAnimationFrame(raf);
+      near.disconnect();
+      window.removeEventListener("scroll", warmUp);
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
     };
@@ -200,15 +228,17 @@ export function FeaturedDock() {
           >
             <video
               ref={videoRef}
-              src="/stem.mp4"
-              autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
+              poster="/stem-poster.webp"
               aria-label={t("featuredSub")}
               className="h-full w-full object-cover"
-            />
+            >
+              <source src="/stem-720.mp4" media="(max-width: 767px)" type="video/mp4" />
+              <source src="/stem-1080.mp4" type="video/mp4" />
+            </video>
             {/* legibility veil under the title; lifts as the film docks */}
             <div
               ref={scrimRef}
@@ -237,7 +267,7 @@ export function FeaturedDock() {
             href="/work/stem"
             className="text-monosm text-text-3 transition-colors duration-300 hover:text-text-1"
           >
-            One of the ideas that actually shipped →
+            {t("featuredShipped")}
           </Link>
           <Link
             href="/work"

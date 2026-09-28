@@ -39,9 +39,9 @@ const EXPECT_NOTICES = [
 ] as const;
 
 const AFTER_HOURS_GIFS = [
-  "/gifs/juventus.gif",
-  "/gifs/art-create.gif",
-  "/gifs/beer-reaction.gif",
+  "/gifs/juventus.webp",
+  "/gifs/art-create.webp",
+  "/gifs/beer-reaction.webp",
 ] as const;
 
 export default async function AboutPage({

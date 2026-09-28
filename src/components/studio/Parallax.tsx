@@ -33,8 +33,6 @@ export function Parallax({
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
       const rawTop = r.top - applied;
-      if (rawTop > vh + 400 || rawTop + r.height < -400) return;
-
       const center = rawTop + r.height / 2 - vh / 2;
       const target = -center * speed;
       if (Math.abs(target - applied) > 0.01) {
@@ -42,9 +40,25 @@ export function Parallax({
         el.style.transform = `translate3d(0, ${applied.toFixed(2)}px, 0)`;
       }
     };
-    raf = requestAnimationFrame(tick);
 
-    return () => cancelAnimationFrame(raf);
+    // the loop runs only while the element is near the viewport
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!raf) raf = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "400px 0px" }
+    );
+    io.observe(el);
+
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, [speed]);
 
   return (
