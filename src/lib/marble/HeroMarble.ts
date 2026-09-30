@@ -11,6 +11,7 @@ import {
   Scene,
   ShaderMaterial,
   SRGBColorSpace,
+  type Texture,
   TextureLoader,
   Vector2,
   Vector3,
@@ -45,8 +46,11 @@ export type HeroMarbleOptions = {
   host: HTMLElement;
   /** Where marble.jpg, mask-r.jpg, mask-g.jpg, mask-b.jpg, gradient.jpg and noise.jpg are served from. */
   base?: string;
-  /** Seconds of the reveal already played. For a still image and for tests. */
+  /** Seconds of the reveal already played, so the veins are already showing when it first appears. */
   startAt?: number;
+  /** Size of the light-ray pass relative to the marble texture. edith draws it at 0.5; it is blurred, so less is cheaper and
+   * looks the same. */
+  raysScale?: number;
   /** Called once if the first seconds run too slowly for the effect to be worth it (the caller then falls back to the still). */
   onSlow?: () => void;
   /** Called if the browser drops the WebGL context. */
@@ -75,7 +79,9 @@ export class HeroMarble {
     gradient.colorSpace = SRGBColorSpace;
     gradient.wrapS = gradient.wrapT = MirroredRepeatWrapping;
     noise.wrapS = noise.wrapT = MirroredRepeatWrapping;
-    return new HeroMarble(options, { marble, gradient, maskR, maskG, maskB, noise });
+    const m = new HeroMarble(options, { marble, gradient, maskR, maskG, maskB, noise });
+    await m.#warm();
+    return m;
   }
 
   #o: HeroMarbleOptions;
@@ -89,7 +95,7 @@ export class HeroMarble {
   #loop: WebGLRenderTarget;
   #blurred: WebGLRenderTarget;
   #blur: GaussianBlurPass;
-  #textures: { dispose(): void }[];
+  #textures: Texture[];
   #dpr = 1;
   #mouse = { value: new Vector2(0, 0) }; // smoothed pointer, -1..1 (shared by both shaders)
   #mouseTarget = new Vector2(0, 0);
@@ -100,6 +106,7 @@ export class HeroMarble {
   #run = 0; // seconds spent running, drives the intro speed-up
   #dts: number[] = [];
   #slowReported = false;
+  #ready = false;
   #resizeObserver: ResizeObserver;
 
   private constructor(options: HeroMarbleOptions, t: Record<"marble" | "gradient" | "maskR" | "maskG" | "maskB" | "noise", import("three").Texture>) {
@@ -110,9 +117,10 @@ export class HeroMarble {
     this.#gl.setPixelRatio(this.#dpr);
     options.canvas.addEventListener("webglcontextlost", this.#onContextLost);
 
-    // Light rays: the marble smeared radially around the pointer, drawn at half size and blurred (edith does the same).
-    const w = t.marble.image.width * 0.5;
-    const h = t.marble.image.height * 0.5;
+    // Light rays: the marble smeared radially around the pointer, drawn small and blurred (edith draws it at half size).
+    const raysScale = options.raysScale ?? 0.5;
+    const w = Math.round(t.marble.image.width * raysScale);
+    const h = Math.round(t.marble.image.height * raysScale);
     const rt = { depthBuffer: false, stencilBuffer: false };
     this.#loop = new WebGLRenderTarget(w, h, rt);
     this.#blurred = new WebGLRenderTarget(w, h, rt);
@@ -199,7 +207,7 @@ export class HeroMarble {
     const u = this.#marbleMat.uniforms;
     u.uResolution.value.set(w, h, this.#dpr);
     u.uPlane.value.set(w, h);
-    if (!this.#running) this.renderOnce();
+    if (!this.#running && this.#ready) this.renderOnce();
   }
 
   get #running() {
@@ -233,6 +241,16 @@ export class HeroMarble {
     gl.setRenderTarget(previous);
   }
 
+  /** Uploads the textures and compiles the shaders before the first frame, off the critical moment of a hover. Where the
+   * browser supports it (KHR_parallel_shader_compile), compiling happens in the background instead of blocking. */
+  async #warm() {
+    for (const t of this.#textures) this.#gl.initTexture(t);
+    await this.#gl.compileAsync(this.#raysMesh, this.#camera);
+    await this.#gl.compileAsync(this.#scene, this.#camera);
+    this.#ready = true;
+    this.renderOnce();
+  }
+
   /** One frame with everything up to date (rays included). Used for stills and after a resize while paused. */
   renderOnce() {
     this.#renderRays();
@@ -248,14 +266,14 @@ export class HeroMarble {
     if (this.#frames % 2 === 0) this.#renderRays();
     this.#gl.render(this.#scene, this.#camera);
 
-    // A device that cannot hold about 22 frames a second gets the still instead. Judged over frames 30 to 120.
-    if (!this.#slowReported && this.#frames > 30 && this.#frames <= 120) this.#dts.push(dt);
-    if (!this.#slowReported && this.#frames === 120) {
+    // A device that cannot hold about 22 frames a second gets the still instead. Judged on the median frame after the first
+    // few, once there are 90 frames or 1.5 seconds of them, so a struggling machine is let off in seconds, not after a minute.
+    if (this.#slowReported) return;
+    if (this.#frames > 8) this.#dts.push(dt);
+    if (this.#dts.length >= 90 || (this.#dts.length >= 8 && this.#dts.reduce((a, b) => a + b, 0) >= 1.5)) {
       const sorted = [...this.#dts].sort((a, b) => a - b);
-      if (sorted[Math.floor(sorted.length / 2)] > 0.045) {
-        this.#slowReported = true;
-        this.#o.onSlow?.();
-      }
+      this.#slowReported = true;
+      if (sorted[Math.floor(sorted.length / 2)] > 0.045) this.#o.onSlow?.();
     }
   };
 

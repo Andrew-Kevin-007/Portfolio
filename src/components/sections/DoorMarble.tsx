@@ -1,11 +1,12 @@
 "use client";
 
 // edith's marble behind a door row, revealed on hover/focus (styles: .door-marble in globals.css). It is a child of the row's
-// <a>, so it drives itself from the row's pointer and focus events. Nothing is fetched until the first hover or keyboard focus:
-// the three.js chunk and textures load on intent, so a visitor who never engages the row pays nothing, and touch devices never
-// engage it at all. The reveal starts from black when the marble is created, which hides the short load. It draws while the
-// row is engaged and keeps drawing through the fade-out, so it dissolves in motion instead of freezing. Reduced motion and data
-// saving get the still instead.
+// <a>, so it drives itself from the row's pointer and focus events. So the first hover is instant, everything is made ready
+// before it: once the row is within a screen of the viewport and the browser is idle, the three.js chunk and textures load,
+// the textures are uploaded and the shaders compiled, all while the panel is invisible. A hover before that boots it on the
+// spot. The reveal starts part-way through, so veins are already there when it first shows. It draws only while the row is
+// engaged, and keeps drawing through the fade-out so it dissolves in motion. Touch devices never load it; data saving loads it
+// only on intent; reduced motion gets the still instead.
 
 import { useEffect, useRef, useState } from "react";
 import type { HeroMarble } from "@/lib/marble/HeroMarble";
@@ -14,6 +15,8 @@ type Mode = "off" | "live" | "still";
 
 /** Matches the .door-marble fade-out in globals.css: the marble keeps moving until it is gone. */
 const FADE_OUT_MS = 1100;
+/** Seconds of the reveal played before it is first shown: long enough that veins are already lit on the first hover. */
+const START_AT = 4;
 
 export function DoorMarble({ base = "/marble" }: { base?: string }) {
   const root = useRef<HTMLSpanElement>(null);
@@ -45,6 +48,8 @@ export function DoorMarble({ base = "/marble" }: { base?: string }) {
       else settle = window.setTimeout(() => marble?.stop(), FADE_OUT_MS);
     };
     const fallBack = () => {
+      // hide it before the context goes: a lost WebGL canvas can paint white for a frame
+      cv.style.visibility = "hidden";
       marble?.dispose();
       marble = undefined;
       setMode("still");
@@ -59,6 +64,8 @@ export function DoorMarble({ base = "/marble" }: { base?: string }) {
           canvas: cv,
           host,
           base,
+          startAt: START_AT,
+          raysScale: 0.25,
           onSlow: force ? undefined : fallBack,
           onLost: fallBack,
         });
@@ -72,14 +79,31 @@ export function DoorMarble({ base = "/marble" }: { base?: string }) {
       sync();
     };
 
+    const bootOnce = () => {
+      if (booted) return;
+      booted = true;
+      void boot();
+    };
     const engage = (on: boolean) => {
       engaged = on;
-      if (on && !booted) {
-        booted = true;
-        void boot();
-      }
+      if (on) bootOnce();
       sync();
     };
+
+    // Ready it ahead of the first hover: when the row is within a screen of the viewport, in the browser's idle time.
+    let idleHandle: number | undefined;
+    const idle = typeof window.requestIdleCallback === "function";
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        near.disconnect();
+        idleHandle = idle
+          ? window.requestIdleCallback(bootOnce, { timeout: 2000 })
+          : window.setTimeout(bootOnce, 300);
+      },
+      { rootMargin: "100% 0px" }
+    );
+    if (!calm && !nav.connection?.saveData) near.observe(door);
     const onEnter = (e: PointerEvent) => e.pointerType !== "touch" && engage(true);
     const onLeave = () => engage(false);
     const onFocus = () => door.matches(":focus-visible") && engage(true);
@@ -90,6 +114,11 @@ export function DoorMarble({ base = "/marble" }: { base?: string }) {
 
     return () => {
       cancelled = true;
+      near.disconnect();
+      if (idleHandle !== undefined) {
+        if (idle) window.cancelIdleCallback(idleHandle);
+        else window.clearTimeout(idleHandle);
+      }
       window.clearTimeout(settle);
       door.removeEventListener("pointerenter", onEnter);
       door.removeEventListener("pointerleave", onLeave);

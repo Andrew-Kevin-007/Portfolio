@@ -346,6 +346,12 @@ html.lenis, html.lenis body { height: auto; }
 .door-marble[data-mode="live"] .door-marble__canvas {
   opacity: 1;
 }
+/* On the fall-back to the still the WebGL context is thrown away, and a lost
+   canvas can paint white for a moment: hide it at once, never fade it out. */
+.door-marble[data-mode="still"] .door-marble__canvas {
+  visibility: hidden;
+  transition: none;
+}
 .door-marble__still {
   object-fit: cover;
   animation: page-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -392,9 +398,11 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* WipeText (components/sections/WipeText.tsx) — edith's hover gradient,
-   painted on letters. Once JS has measured the baseline (.is-ready), the SVG
-   draws the word and the real text below keeps its layout, selection and
-   accessible name with a transparent fill; before that, the real text shows. */
+   painted on letters. At rest the real text is left completely alone. While
+   the effect is active (.is-active) the real text steps aside and an SVG copy
+   of the word takes over: a plain layer with the gradient wiping over it, both
+   under one glyph mask. The SVG only shows once JS has measured the baseline
+   it has to sit on (.is-ready). */
 .wipe-text {
   position: relative;
   display: inline-block;
@@ -414,13 +422,12 @@ html.lenis, html.lenis body { height: auto; }
   pointer-events: none;
   visibility: hidden;
 }
-.wipe-text.is-ready .wipe-text__fx {
+.wipe-text.is-ready.is-active .wipe-text__fx {
   visibility: visible;
 }
-.wipe-text.is-ready .wipe-text__label {
-  -webkit-text-fill-color: transparent;
+.wipe-text.is-ready.is-active .wipe-text__label {
+  color: transparent;
 }
-
 /* device shots float free — no shadow, no card chrome */
 .mockup-img {
   height: auto;

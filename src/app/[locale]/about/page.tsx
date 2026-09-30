@@ -7,6 +7,7 @@ import { Expander } from "@/components/motion/Expander";
 import { EmailCopy } from "@/components/shell/EmailCopy";
 import { ProfilePageJsonLd } from "@/components/shell/PersonJsonLd";
 import { EDITH_URL } from "@/content/site";
+import { WipeText } from "@/components/sections/WipeText";
 
 export async function generateMetadata({
   params,
@@ -24,7 +25,7 @@ export async function generateMetadata({
 }
 
 const STOPS = [
-  { key: "stop1", org: "Edith", href: EDITH_URL },
+  { key: "stop1", org: "edith", href: EDITH_URL },
   { key: "stop2", org: "Bluestock" },
   { key: "stop3", org: "SmartBridge × Google" },
   { key: "stop4", org: "Raditon Intelligence" },
@@ -89,9 +90,11 @@ export default async function AboutPage({
                     href={EDITH_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-intel"
+                    className="border-b border-hairline-strong text-text-1"
                   >
-                    {chunks}
+                    <WipeText>
+                      {Array.isArray(chunks) ? chunks.join("") : String(chunks)}
+                    </WipeText>
                   </a>
                 ),
               })}
@@ -157,9 +160,9 @@ export default async function AboutPage({
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="whitespace-nowrap text-intel"
+                      className="whitespace-nowrap"
                     >
-                      {s.org}
+                      <WipeText>{s.org}</WipeText>
                     </a>
                   ) : (
                     <span className="whitespace-nowrap">{s.org}</span>
