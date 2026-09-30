@@ -1,4 +1,10 @@
 # KEVINANDREW.TECH — REBUILD MASTER PLAN
+
+> **Status note, 30 September 2026.** This is the original plan, kept as history; `README.md` describes the site as it is. Where
+> the site differs from what follows: it runs Next.js 16 and React 19 (the plan says Next.js 15); there is no GSAP, ScrollTrigger
+> or OGL (Lenis stays; motion is `requestAnimationFrame`, CSS and the Web Animations API); there is no `/studio` page (it was
+> retired, and the "Studio" door became a link to edith at `https://edith-plum.vercel.app`); and there is no `/leadership` page.
+> The home page's one WebGL moment is the edith marble behind that door, loaded on hover.
 ### Codename: QUIET LEDGER · v1.1 · July 2026
 ### Status: PROCEED given — building in-session, in `rebuild/`
 

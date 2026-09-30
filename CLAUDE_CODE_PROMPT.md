@@ -1,4 +1,9 @@
 # ULTRA PROMPT — kevinandrew.tech rebuild
+
+> **Status note, 30 September 2026.** This is the prompt the site was first built from, kept as history; `README.md` describes the
+> site as it is. Do not build from it again as written. Since then: the stack is Next.js 16 and React 19 (the prompt says Next.js
+> 15); GSAP, ScrollTrigger and OGL are gone (Lenis stays); the `/studio` page was retired and its door links to edith at
+> `https://edith-plum.vercel.app`; and there is no `/leadership` page.
 ### Paste into Claude Code at the root of a NEW empty repo. Self-contained; no other doc required.
 ### v1.1 — After Hours and Currently/now REMOVED. /leadership page ADDED (mentor evidence).
 ### Home = five beats: Hero → Select work ×3 → Doors (Research/Studio/Leadership) → Writing titles → Footer.

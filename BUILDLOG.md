@@ -1,5 +1,12 @@
 # BUILDLOG — kevinandrew-site
 
+> **Status note, 30 September 2026.** This is the log of the first build, kept as history. The site has moved on; `README.md`
+> describes it as it is. What changed: the stack is now Next.js 16 and React 19 (Turbopack); fonts are self-hosted with
+> `next/font/local`; OG cards exist (`opengraph-image.tsx`); `SITE_URL` is <https://www.kevinandrew.tech>; the CV is at
+> `public/kevin-andrew-cv.pdf`; GSAP is gone (motion is `requestAnimationFrame`, CSS and the Web Animations API); the
+> Studio page was retired and its door became a link to edith. The hand-rolled WebGL particle drift described below is no
+> longer on the site. The [CONFIRM] list below was written before launch; items 3 to 7 and 9 were not re-checked here.
+
 ## What this is
 Ground-up rebuild of kevinandrew.tech. Concept: **a quiet ledger with physics underneath** —
 Ben Roach's editorial discipline (one 800px column, Google Sans Flex at a single weight,
