@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Next 16.3 otherwise writes AGENTS.md and CLAUDE.md into the project on every `next dev`.
+  agentRules: false,
   poweredByHeader: false,
   devIndicators: false,
   // Serve modern formats (AVIF, then WebP) for anything routed through
