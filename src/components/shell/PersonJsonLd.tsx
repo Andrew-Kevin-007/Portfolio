@@ -96,8 +96,10 @@ const personNode = {
 const edithNode = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#edith`,
-  name: "Edith",
+  name: "edith",
   url: EDITH_URL,
+  description:
+    "A community of developers that runs itself. Everyone starts as a Catalyst; Maintainers earn the right to work under the edith name.",
   founder: { "@id": `${SITE_URL}/#person` },
 };
 

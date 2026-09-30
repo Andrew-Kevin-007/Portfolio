@@ -9,7 +9,7 @@ import { WipeText } from "./WipeText";
  * The rooms — navigation and news folded into one object: each room that
  * has a live thread carries it as a pulsing status line, so you don't visit
  * a separate "currently" section to find out what's active right now.
- * Edith lives on its own external site, so its door is the one external link
+ * edith lives on its own external site, so its door is the one external link
  * in the list, and the one that lights up: hovering it reveals the marble behind
  * the row and wipes edith's gradient across its name. Same dark room as the
  * rest of the house — no contrast banding.

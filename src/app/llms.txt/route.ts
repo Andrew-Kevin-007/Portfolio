@@ -54,9 +54,9 @@ Papers and formal work — same honesty rules as the case studies.
 
 ${research}
 
-## Edith
+## edith
 
-- [Edith](${EDITH_URL}): A legion of builders that runs itself — build, contribute, evolve.
+- [edith](${EDITH_URL}): A community of developers that runs itself. Everyone starts as a Catalyst; Maintainers earn the right to work under the edith name. Founded by Kevin Andrew.
 
 ## Optional
 
