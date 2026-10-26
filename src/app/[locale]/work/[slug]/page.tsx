@@ -7,7 +7,7 @@ import { StudyBlocks } from "@/components/sections/StudyBlocks";
 import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
 import { Rich } from "@/lib/rich";
-import { localeAlternates } from "@/lib/seo";
+import { englishOnlyAlternates } from "@/lib/seo";
 import { ArticleJsonLd } from "@/components/shell/ArticleJsonLd";
 
 export function generateStaticParams() {
@@ -25,7 +25,7 @@ export async function generateMetadata({
   return {
     title: `${study.name}: ${study.title}`,
     description: study.dek,
-    alternates: localeAlternates(locale, `/work/${slug}`),
+    alternates: englishOnlyAlternates(`/work/${slug}`),
   };
 }
 

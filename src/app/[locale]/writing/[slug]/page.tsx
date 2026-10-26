@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { essays, getEssay } from "@/content/writing";
 import { Rich } from "@/lib/rich";
 import { Reveal } from "@/components/motion/Reveal";
-import { localeAlternates } from "@/lib/seo";
+import { englishOnlyAlternates } from "@/lib/seo";
 import { ArticleJsonLd } from "@/components/shell/ArticleJsonLd";
 
 export function generateStaticParams() {
@@ -23,7 +23,7 @@ export async function generateMetadata({
   return {
     title: essay.title,
     description: essay.description,
-    alternates: localeAlternates(locale, `/writing/${slug}`),
+    alternates: englishOnlyAlternates(`/writing/${slug}`),
   };
 }
 

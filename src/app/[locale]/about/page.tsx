@@ -175,6 +175,15 @@ export default async function AboutPage({
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.1}>
+          <Link
+            href="/links"
+            className="mt-10 inline-block text-meta text-text-3 transition-colors duration-300 hover:text-text-1"
+          >
+            {t("linksCta")} →
+          </Link>
+        </Reveal>
       </section>
 
       {/* What you can expect — heading, full-width paragraph, then two

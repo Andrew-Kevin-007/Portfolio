@@ -21,3 +21,16 @@ export function localeAlternates(locale: string, href: string) {
     languages,
   };
 }
+
+/**
+ * For detail pages whose body is English on every route (work, research,
+ * writing): the /de URL carries the same English text under translated chrome,
+ * so it is not a real translation and must not claim to be one. Both locales
+ * canonicalise to the English URL and no hreflang pair is emitted. Pages that
+ * are genuinely translated keep using localeAlternates.
+ */
+export function englishOnlyAlternates(href: string) {
+  return {
+    canonical: getPathname({ locale: routing.defaultLocale, href }),
+  };
+}

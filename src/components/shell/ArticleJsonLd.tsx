@@ -55,8 +55,10 @@ export function ArticleJsonLd({
   /** Other named authors, listed after the site owner (first author). */
   coAuthors?: { name: string; url?: string }[];
 }) {
-  // localePrefix is "as-needed": en lives at the bare path, de under /de.
-  const base = locale === "de" ? `${SITE_URL}/de` : SITE_URL;
+  // Detail pages canonicalise to the English URL on every locale (the body is
+  // English-only), so the structured data names that URL, not the /de one.
+  void locale;
+  const base = SITE_URL;
   const datePublished = isoDate(published);
 
   const article: Record<string, unknown> = {
