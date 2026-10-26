@@ -129,7 +129,7 @@ export default async function LinksPage({
         <h1 className="max-w-[18ch] text-display">Official links</h1>
         <p className="mt-6 max-w-[52ch] text-lede text-text-2">
           The places that are genuinely mine, and what each one is. If you are
-          looking for {NAME}, the engineer and researcher in Chennai, start here.
+          looking for {NAME}, who builds cloud systems, protocols and applied AI, start here.
         </p>
       </header>
 
