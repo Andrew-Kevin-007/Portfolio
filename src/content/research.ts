@@ -34,7 +34,7 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     slug: "indic-kg-population",
-    title: "Translation Repairs Relations, Not Retrieval",
+    title: "Decomposing the Low-Resource Penalty in Indic Knowledge Graph Population",
     domain: "multilingual NLP",
     status: "accepted",
     github: "https://github.com/Andrew-Kevin-007/translation-repairs-relations",
