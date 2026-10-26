@@ -11,4 +11,7 @@ export const routing = defineRouting({
   // header, so it was being told "this URL is English" and then handed German.
   // Off: the URL alone decides the locale, and the switcher stays explicit.
   localeDetection: false,
+  // The URL alone decides the locale, so the NEXT_LOCALE cookie carried no
+  // information. Off: the site sets no cookies, so no consent banner is needed.
+  localeCookie: false,
 });
