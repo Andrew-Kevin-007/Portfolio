@@ -176,7 +176,7 @@ export const papers: Paper[] = [
       },
       {
         kind: "p",
-        text: "Accepted at IC3IoT 2026, Track 4 (Blockchain, Cloud Computing and Big Data Analytics), 24 to 25 September 2026. Co-authored with [Kavita Sri](https://github.com/KavitaSri06).",
+        text: "Accepted at ICCCIoT-2026, Track 4 (Blockchain, Cloud Computing and Big Data Analytics), 24 to 25 September 2026. Co-authored with [Kavita Sri](https://github.com/KavitaSri06).",
       },
       {
         kind: "next",

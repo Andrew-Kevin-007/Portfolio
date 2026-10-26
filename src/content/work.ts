@@ -174,7 +174,7 @@ export const studies: CaseStudy[] = [
       approach:
         "**Measure what content-blindness actually costs, on 44.1 million real requests from Microsoft Azure's production LLM inference traces.** Service work splits into a prefill pass (visible at admission from context length alone) and a decode phase (not visible until the request finishes), and prefill turns out to be the larger share. CB-SJF-Work orders admissions by estimated total work using only token counts and arrival metadata, never prompt content.",
       state:
-        "**Accepted at IC3IoT 2026, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
+        "**Accepted at ICCCIoT-2026, camera-ready submitted.** Recovers 90.3% (conversation) and 79.3% (code) of what a perfect-information oracle scheduler attains, without reading a single prompt.",
     },
     blocks: [
       { kind: "h2", text: "The noticing" },
@@ -208,7 +208,7 @@ export const studies: CaseStudy[] = [
         items: [
           { label: "Traces analysed", value: "44.1M requests", note: "Azure production LLM inference traces, one full week" },
           { label: "Simulator", value: "trace-driven", note: "continuous-batching engine, iteration-level scheduling" },
-          { label: "Status", value: "IEEE camera-ready", note: "IC3IoT 2026, presenting 24 to 25 September" },
+          { label: "Status", value: "IEEE camera-ready", note: "ICCCIoT-2026, presenting 24 to 25 September" },
         ],
       },
       {
