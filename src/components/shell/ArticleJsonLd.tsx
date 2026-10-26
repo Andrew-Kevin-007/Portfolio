@@ -37,6 +37,7 @@ export function ArticleJsonLd({
   path,
   published,
   locale,
+  coAuthors,
 }: {
   /** ScholarlyArticle for papers, Article for essays and case studies. */
   type: "Article" | "ScholarlyArticle";
@@ -51,6 +52,8 @@ export function ArticleJsonLd({
   /** Free-form date string from the content registry; omitted if unparseable. */
   published?: string;
   locale: string;
+  /** Other named authors, listed after the site owner (first author). */
+  coAuthors?: { name: string; url?: string }[];
 }) {
   // localePrefix is "as-needed": en lives at the bare path, de under /de.
   const base = locale === "de" ? `${SITE_URL}/de` : SITE_URL;
@@ -66,7 +69,17 @@ export function ArticleJsonLd({
     inLanguage: locale,
     // By @id, not by name — a bare author string cannot be reconciled to a
     // person, which is the whole failure mode this markup exists to avoid.
-    author: { "@id": `${SITE_URL}/#person` },
+    // Order is the byline order: the site owner first, then any co-authors.
+    author: coAuthors?.length
+      ? [
+          { "@id": `${SITE_URL}/#person` },
+          ...coAuthors.map((a) => ({
+            "@type": "Person",
+            name: a.name,
+            ...(a.url ? { url: a.url } : {}),
+          })),
+        ]
+      : { "@id": `${SITE_URL}/#person` },
     publisher: { "@id": `${SITE_URL}/#person` },
     isPartOf: { "@id": `${SITE_URL}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${base}${path}` },

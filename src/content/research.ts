@@ -27,6 +27,8 @@ export type Paper = {
   /** verified links only — omitted until live */
   pdf?: string;
   github?: string;
+  /** Co-authors besides the site owner, who is always first author here. */
+  coAuthors?: { name: string; url?: string }[];
 };
 
 export const papers: Paper[] = [
@@ -124,6 +126,7 @@ export const papers: Paper[] = [
     domain: "cloud scheduling",
     status: "accepted",
     github: "https://github.com/Andrew-Kevin-007/content-blind-scheduling",
+    coAuthors: [{ name: "Kavita Sri", url: "https://github.com/KavitaSri06" }],
     oneLiner:
       "What LLM inference scheduling loses when it cannot read the prompt, measured on 44.1M real Azure production requests. It is less than the literature assumed.",
     dek: "Every serious fix for head-of-line blocking in LLM serving reads the prompt to guess how long the response will be. This paper asks what a scheduler forfeits when it cannot, and finds the answer smaller than expected.",

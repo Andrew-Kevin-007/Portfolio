@@ -58,6 +58,7 @@ export default async function PaperPage({
         sectionPath="/research"
         path={`/research/${slug}`}
         locale={locale}
+        coAuthors={paper.coAuthors}
       />
       <header>
         <p className="text-monosm text-text-3">
