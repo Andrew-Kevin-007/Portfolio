@@ -49,7 +49,7 @@ export default async function PaperPage({
   ];
 
   return (
-    <article className="container-column pt-36 pb-8">
+    <article lang="en" className="container-column pt-36 pb-8">
       <ArticleJsonLd
         type="ScholarlyArticle"
         headline={paper.title}

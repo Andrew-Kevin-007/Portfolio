@@ -66,7 +66,9 @@ export function ArticleJsonLd({
     headline,
     description,
     url: `${base}${path}`,
-    inLanguage: locale,
+    // The body is English on every route, /de included: only the UI strings
+    // are translated. Declaring "de" here mislabelled English text as German.
+    inLanguage: "en",
     // By @id, not by name — a bare author string cannot be reconciled to a
     // person, which is the whole failure mode this markup exists to avoid.
     // Order is the byline order: the site owner first, then any co-authors.

@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/writing",
     "/about",
     "/contact",
+    "/links",
   ];
   const dynamicPaths = [
     ...studies.map((s) => `/work/${s.slug}`),

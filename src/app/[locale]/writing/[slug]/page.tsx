@@ -41,7 +41,7 @@ export default async function EssayPage({
   const next = essays[(index + 1) % essays.length];
 
   return (
-    <article className="container-column pt-36 pb-8">
+    <article lang="en" className="container-column pt-36 pb-8">
       <ArticleJsonLd
         type="Article"
         headline={essay.title}

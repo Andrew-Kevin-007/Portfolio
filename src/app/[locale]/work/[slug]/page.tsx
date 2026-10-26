@@ -23,7 +23,7 @@ export async function generateMetadata({
   const study = getStudy(slug);
   if (!study) return {};
   return {
-    title: study.title,
+    title: `${study.name}: ${study.title}`,
     description: study.dek,
     alternates: localeAlternates(locale, `/work/${slug}`),
   };
@@ -50,10 +50,10 @@ export default async function StudyPage({
   ];
 
   return (
-    <article className="container-column pt-36 pb-8">
+    <article lang="en" className="container-column pt-36 pb-8">
       <ArticleJsonLd
         type="Article"
-        headline={study.title}
+        headline={`${study.name}: ${study.title}`}
         description={study.oneLiner}
         section="Work"
         sectionPath="/work"
