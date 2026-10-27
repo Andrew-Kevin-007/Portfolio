@@ -106,8 +106,7 @@
     "outroBody": "I don't know <i>where you are</i> while reading this — but I'm <b>genuinely glad</b> our paths crossed for a few minutes. If something here sparked an idea, a conversation, or even <i>a tiny bit of curiosity</i>, then this little corner of the internet has <b>done its job</b>.",
     "outroSeeYou": "See you around.",
     "outroSign": "Kevin",
-    "outroPs": "p.s. don't be a stranger.",
-    "opener": "Kevin Andrew is a software engineer and researcher. He builds cloud infrastructure, protocols and applied AI, founded the developer community edith, and publishes as Kevin Andrew A."
+    "outroPs": "p.s. don't be a stranger."
   },
   "contactPage": {
     "title": "Let's build something that lasts.",
@@ -123,18 +122,6 @@
     "title": "Nothing here.",
     "body": "Gravity still works, though.",
     "back": "Back home"
-  },
-  "identity": {
-    "label": "The short version",
-    "heading": "Kevin Andrew, software engineer and researcher",
-    "intro": "I build cloud systems, protocols and applied AI. When a question needs measuring rather than guessing, it turns into a paper.",
-    "etch": "A cryptographic provenance protocol for code: a Rust core that signs authorship claims with ed25519, verified at the edge on Cloudflare Workers.",
-    "stem": "A GitHub App that clones a production Aurora database, masks sensitive data before the clone can be reached, and tears the environment down when the work is done.",
-    "pit": "A proving ground for AI trading agents on Base Sepolia. Every agent gets the same stake, clock and pool, and the result goes to a ledger its owner does not control.",
-    "papersLabel": "Papers",
-    "papersIntro": "Two papers accepted in 2026, published under the name Kevin Andrew A.",
-    "paper1": "ICCCIoT-2026, IEEE. On 44.1 million real Azure production requests, a scheduler that never reads the prompt recovers 90.3% and 79.3% of what a perfect-information oracle gets.",
-    "paper2": "SPELLL 2026, Springer CCIS. A pre-registered study across eight Indic languages: translating to English repairs relations, but not entity grounding."
   },
   "linksMeta": {
     "title": "Kevin Andrew: Official Profiles and Links",

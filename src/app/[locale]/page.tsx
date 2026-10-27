@@ -3,7 +3,6 @@ import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/Hero";
 import { Highlights } from "@/components/sections/Highlights";
 import { Manifesto } from "@/components/sections/Manifesto";
-import { Identity } from "@/components/sections/Identity";
 import { FeaturedDock } from "@/components/sections/FeaturedDock";
 import { Doors } from "@/components/sections/Doors";
 import { localeAlternates } from "@/lib/seo";
@@ -38,7 +37,6 @@ export default async function HomePage({
       <WebSiteJsonLd />
       <Hero />
       <Manifesto />
-      <Identity />
       <FeaturedDock />
       <Doors />
       <Highlights />

@@ -63,9 +63,6 @@ export default async function AboutPage({
           {tn("about")}
           <span className="text-text-3">.</span>
         </h1>
-        <p className="mt-6 max-w-[58ch] text-lede text-text-1">
-          {t("opener")}
-        </p>
         <p className="mt-6 max-w-[58ch] text-lede text-text-2">
           {t.rich("short", { b: (chunks) => <strong>{chunks}</strong> })}
         </p>
