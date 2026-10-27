@@ -22,6 +22,9 @@ export type Paper = {
   oneLiner: string;
   /** the lede on the detail page */
   dek: string;
+  /** search-result overrides when title/dek run past ~60 / ~155 characters */
+  metaTitle?: string;
+  metaDescription?: string;
   tldr: { problem: string; approach: string; findings: string };
   blocks: StudyBlock[];
   /** verified links only — omitted until live */
@@ -35,6 +38,9 @@ export const papers: Paper[] = [
   {
     slug: "indic-kg-population",
     title: "Decomposing the Low-Resource Penalty in Indic Knowledge Graph Population",
+    metaTitle: "Low-Resource Penalty in Indic KG Population",
+    metaDescription:
+      "A pre-registered study separating the two ways low-resource text fails knowledge graph population, and testing whether translating to English fixes either.",
     domain: "multilingual NLP",
     status: "accepted",
     github: "https://github.com/Andrew-Kevin-007/translation-repairs-relations",
@@ -123,6 +129,9 @@ export const papers: Paper[] = [
   {
     slug: "content-blind-scheduling",
     title: "Quantifying the Cost of Content-Blindness in LLM Inference Scheduling",
+    metaTitle: "The Cost of Content-Blind LLM Scheduling",
+    metaDescription:
+      "What does an LLM scheduler forfeit when it cannot read the prompt to guess response length? Less than expected.",
     domain: "cloud scheduling",
     status: "accepted",
     github: "https://github.com/Andrew-Kevin-007/content-blind-scheduling",
@@ -187,6 +196,8 @@ export const papers: Paper[] = [
   {
     slug: "clinical-risk-prediction",
     title: "Clinical risk prediction",
+    metaDescription:
+      "A pressure-ulcer risk model that is honest about its own numbers: ensemble methods, an imbalance-safe metric, audited before any accuracy claim.",
     domain: "applied ML",
     status: "complete",
     oneLiner:

@@ -23,7 +23,7 @@ export async function generateMetadata({
   const study = getStudy(slug);
   if (!study) return {};
   return {
-    title: `${study.name}: ${study.title}`,
+    title: study.metaTitle ?? `${study.name}: ${study.title}`,
     description: study.dek,
     alternates: englishOnlyAlternates(`/work/${slug}`),
   };

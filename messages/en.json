@@ -1,14 +1,16 @@
 {
   "meta": {
-    "title": "Kevin Andrew — Cloud Systems, Protocols & Applied AI",
-    "description": "Kevin Andrew builds cloud infrastructure, protocols, and applied AI — designed from first principles and shipped end to end."
+    "title": "Kevin Andrew — Software Engineer, Cloud Systems & AI",
+    "description": "Kevin Andrew builds Etch (cryptographic provenance for code) and STEM (masked production database clones), and researches LLM inference scheduling."
   },
   "pageMeta": {
-    "research": "Formal research on code provenance, LLM inference scheduling and multilingual knowledge-graph population: the problems, the approach, and the open questions behind the papers.",
+    "research": "Papers by Kevin Andrew A on content-blind LLM inference scheduling (ICCCIoT-2026) and Indic knowledge graph population (SPELLL 2026).",
     "studio": "Edith Studio — a small design and engineering practice by Kevin Andrew. Products and AI systems that simply work, built end to end for select clients.",
     "writing": "Essays and notes by Kevin Andrew — on building, becoming, and the gap between who you are and what you're building.",
-    "about": "Kevin Andrew — engineer, founder of edith, and researcher. A curiosity that never sits still: building, writing, and chasing ideas end to end.",
-    "contact": "Get in touch with Kevin Andrew — client work, research, collaborations, or just to say hello. Replies usually within a day."
+    "about": "Kevin Andrew (Kevin Andrew A on papers) is a software engineer and researcher: Etch, STEM, two 2026 papers and the edith developer community.",
+    "contact": "Get in touch with Kevin Andrew — client work, research, collaborations, or just to say hello. Replies usually within a day.",
+    "work": "Projects by Kevin Andrew: Etch, a provenance protocol for code; STEM, safe production database clones; The Pit, a proving ground for AI agents.",
+    "aboutTitle": "About Kevin Andrew — Engineer and Researcher"
   },
   "nav": {
     "work": "Work",
@@ -31,7 +33,7 @@
   },
   "home": {
     "heroL1": "Hey,",
-    "heroL2": "I'm Kevin",
+    "heroL2": "I'm Kevin Andrew",
     "lede": "I run on caffeine, playlists, and \"what if?\" Most days you'll find me designing, building, researching, or convincing myself that starting another side project is a good idea. If an idea keeps me awake at night, it's probably worth building.",
     "selectWork": "For the nerds",
     "allWork": "View blog",
@@ -104,7 +106,8 @@
     "outroBody": "I don't know <i>where you are</i> while reading this — but I'm <b>genuinely glad</b> our paths crossed for a few minutes. If something here sparked an idea, a conversation, or even <i>a tiny bit of curiosity</i>, then this little corner of the internet has <b>done its job</b>.",
     "outroSeeYou": "See you around.",
     "outroSign": "Kevin",
-    "outroPs": "p.s. don't be a stranger."
+    "outroPs": "p.s. don't be a stranger.",
+    "opener": "Kevin Andrew is a software engineer and researcher. He builds cloud infrastructure, protocols and applied AI, founded the developer community edith, and publishes as Kevin Andrew A."
   },
   "contactPage": {
     "title": "Let's build something that lasts.",
@@ -120,5 +123,21 @@
     "title": "Nothing here.",
     "body": "Gravity still works, though.",
     "back": "Back home"
+  },
+  "identity": {
+    "label": "The short version",
+    "heading": "Kevin Andrew, software engineer and researcher",
+    "intro": "I build cloud systems, protocols and applied AI. When a question needs measuring rather than guessing, it turns into a paper.",
+    "etch": "A cryptographic provenance protocol for code: a Rust core that signs authorship claims with ed25519, verified at the edge on Cloudflare Workers.",
+    "stem": "A GitHub App that clones a production Aurora database, masks sensitive data before the clone can be reached, and tears the environment down when the work is done.",
+    "pit": "A proving ground for AI trading agents on Base Sepolia. Every agent gets the same stake, clock and pool, and the result goes to a ledger its owner does not control.",
+    "papersLabel": "Papers",
+    "papersIntro": "Two papers accepted in 2026, published under the name Kevin Andrew A.",
+    "paper1": "ICCCIoT-2026, IEEE. On 44.1 million real Azure production requests, a scheduler that never reads the prompt recovers 90.3% and 79.3% of what a perfect-information oracle gets.",
+    "paper2": "SPELLL 2026, Springer CCIS. A pre-registered study across eight Indic languages: translating to English repairs relations, but not entity grounding."
+  },
+  "linksMeta": {
+    "title": "Kevin Andrew: Official Profiles and Links",
+    "description": "The official GitHub, LinkedIn, ORCID and social profiles of Kevin Andrew, software engineer and researcher (Kevin Andrew A on papers)."
   }
 }

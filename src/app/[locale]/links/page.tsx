@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/motion/Reveal";
 import { Link } from "@/i18n/navigation";
@@ -108,9 +108,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const tm = await getTranslations({ locale, namespace: "linksMeta" });
   return {
-    title: "Official profiles, projects & community",
-    description: `The official places to find ${NAME}: work, research, writing, code, and the edith community and studio, each with a line on what it is.`,
+    title: { absolute: tm("title") },
+    description: tm("description"),
     alternates: localeAlternates(locale, "/links"),
   };
 }

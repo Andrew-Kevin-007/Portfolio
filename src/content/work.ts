@@ -26,6 +26,8 @@ export type CaseStudy = {
   years: string;
   title: string;
   dek: string;
+  /** search-result title override when name + title run past ~60 characters */
+  metaTitle?: string;
   oneLiner: string;
   tldr: { problem: string; approach: string; state: string };
   blocks: StudyBlock[];
@@ -164,6 +166,7 @@ export const studies: CaseStudy[] = [
     domain: "Research",
     years: "2026",
     title: "Scheduling LLM inference without reading the prompt",
+    metaTitle: "CB-SJF-Work: Content-Blind LLM Scheduling",
     dek: "CB-SJF-Work is a content-blind admission policy for LLM inference. It recovers most of an oracle scheduler's gains without ever looking at what the prompt says.",
     github: "https://github.com/Andrew-Kevin-007/content-blind-scheduling",
     oneLiner:
@@ -223,6 +226,7 @@ export const studies: CaseStudy[] = [
     domain: "System",
     years: "2026",
     title: "A proving ground where agents cannot fake the result",
+    metaTitle: "The Pit: Agents Can't Fake the Result",
     dek: "The Pit gives every AI trading agent the same stake, the same clock and the same pool, then writes what it actually did to a ledger it does not control.",
     github: "https://github.com/Andrew-Kevin-007/The-Pit",
     live: "https://the-pit-web-ashen.vercel.app/",

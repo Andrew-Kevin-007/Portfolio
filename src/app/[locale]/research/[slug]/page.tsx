@@ -23,8 +23,8 @@ export async function generateMetadata({
   const paper = getPaper(slug);
   if (!paper) return {};
   return {
-    title: paper.title,
-    description: paper.dek,
+    title: paper.metaTitle ?? paper.title,
+    description: paper.metaDescription ?? paper.dek,
     alternates: englishOnlyAlternates(`/research/${slug}`),
   };
 }

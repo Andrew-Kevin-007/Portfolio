@@ -4,11 +4,13 @@
     "description": "Kevin Andrew entwickelt Cloud-Infrastruktur, Protokolle und angewandte KI — von Grundprinzipien aus gedacht und vollständig umgesetzt."
   },
   "pageMeta": {
-    "research": "Formale Forschung zu Code-Provenienz, LLM-Inferenz-Scheduling und mehrsprachiger Knowledge-Graph-Population: die Probleme, der Ansatz und die offenen Fragen hinter den Papern.",
+    "research": "Paper von Kevin Andrew A zu inhaltsblindem LLM-Inferenz-Scheduling (ICCCIoT-2026) und zur Population von Knowledge Graphs für indische Sprachen (SPELLL 2026).",
     "studio": "Edith Studio — eine kleine Design- und Engineering-Praxis von Kevin Andrew. Produkte und KI-Systeme, die einfach funktionieren, vollständig umgesetzt.",
     "writing": "Essays und Notizen von Kevin Andrew — über das Bauen, das Werden und die Lücke zwischen dem, wer du bist, und dem, was du baust.",
-    "about": "Kevin Andrew — Ingenieur, Gründer von edith und Forscher. Eine Neugier, die nie stillsteht: bauen, schreiben und Ideen vollständig verfolgen.",
-    "contact": "Kontakt zu Kevin Andrew — Kundenarbeit, Forschung, Zusammenarbeit oder einfach nur Hallo sagen. Antwort meist innerhalb eines Tages."
+    "about": "Kevin Andrew (auf Papern Kevin Andrew A) ist Software-Ingenieur und Forscher: Etch, STEM, zwei Paper 2026 und die Entwickler-Community edith.",
+    "contact": "Kontakt zu Kevin Andrew — Kundenarbeit, Forschung, Zusammenarbeit oder einfach nur Hallo sagen. Antwort meist innerhalb eines Tages.",
+    "work": "Projekte von Kevin Andrew: Etch, ein Provenienz-Protokoll für Code; STEM, sichere Klone von Produktionsdatenbanken; The Pit, ein Prüfstand für KI-Agenten.",
+    "aboutTitle": "Über Kevin Andrew — Ingenieur und Forscher"
   },
   "nav": {
     "work": "Arbeit",
@@ -31,7 +33,7 @@
   },
   "home": {
     "heroL1": "Hey,",
-    "heroL2": "Ich bin Kevin",
+    "heroL2": "Ich bin Kevin Andrew",
     "lede": "Ich laufe auf Kaffee, Playlisten und „Was wäre wenn?“ An den meisten Tagen findest du mich beim Designen, Bauen, Recherchieren oder beim Überreden von mir selbst, dass ein neues Nebenprojekt eine gute Idee ist. Wenn eine Idee mich nachts wach hält, lohnt sie sich wahrscheinlich zu bauen.",
     "selectWork": "Für die Nerds",
     "allWork": "Zum Blog",
@@ -104,7 +106,8 @@
     "outroBody": "Ich weiß nicht, <i>wo du gerade bist</i>, während du das liest — aber ich freue mich <b>wirklich</b>, dass sich unsere Wege für ein paar Minuten gekreuzt haben. Wenn hier etwas eine Idee, ein Gespräch oder auch nur <i>ein bisschen Neugier</i> ausgelöst hat, dann hat diese kleine Ecke des Internets <b>ihren Zweck erfüllt</b>.",
     "outroSeeYou": "Man sieht sich.",
     "outroSign": "Kevin",
-    "outroPs": "p.s. bleib kein Fremder."
+    "outroPs": "p.s. bleib kein Fremder.",
+    "opener": "Kevin Andrew ist Software-Ingenieur und Forscher. Er baut Cloud-Infrastruktur, Protokolle und angewandte KI, hat die Entwickler-Community edith gegründet und veröffentlicht als Kevin Andrew A."
   },
   "contactPage": {
     "title": "Lass uns etwas bauen, das bleibt.",
@@ -120,5 +123,21 @@
     "title": "Hier ist nichts.",
     "body": "Die Schwerkraft funktioniert trotzdem.",
     "back": "Zurück zum Start"
+  },
+  "identity": {
+    "label": "Die Kurzfassung",
+    "heading": "Kevin Andrew, Software-Ingenieur und Forscher",
+    "intro": "Ich baue Cloud-Systeme, Protokolle und angewandte KI. Wenn eine Frage Messen statt Raten braucht, wird daraus ein Paper.",
+    "etch": "Ein kryptografisches Provenienz-Protokoll für Code: ein Rust-Kern, der Urheberschaftsbehauptungen mit ed25519 signiert, geprüft am Edge auf Cloudflare Workers.",
+    "stem": "Eine GitHub-App, die eine Aurora-Produktionsdatenbank klont, sensible Daten maskiert, bevor der Klon erreichbar ist, und die Umgebung abbaut, wenn die Arbeit fertig ist.",
+    "pit": "Ein Prüfstand für KI-Handelsagenten auf Base Sepolia. Jeder Agent bekommt denselben Einsatz, dieselbe Uhr und denselben Pool; das Ergebnis landet in einem Register, das sein Besitzer nicht kontrolliert.",
+    "papersLabel": "Paper",
+    "papersIntro": "Zwei Paper 2026 angenommen, veröffentlicht unter dem Namen Kevin Andrew A.",
+    "paper1": "ICCCIoT-2026, IEEE. Auf 44,1 Millionen echten Azure-Produktionsanfragen holt ein Scheduler, der den Prompt nie liest, 90,3 % und 79,3 % dessen heraus, was ein Orakel mit perfekter Information erreicht.",
+    "paper2": "SPELLL 2026, Springer CCIS. Eine vorab registrierte Studie über acht indische Sprachen: Übersetzen ins Englische repariert Relationen, aber nicht die Entitätszuordnung."
+  },
+  "linksMeta": {
+    "title": "Kevin Andrew: Offizielle Profile und Links",
+    "description": "Die offiziellen GitHub-, LinkedIn-, ORCID- und Social-Profile von Kevin Andrew, Software-Ingenieur und Forscher (auf Papern Kevin Andrew A)."
   }
 }
