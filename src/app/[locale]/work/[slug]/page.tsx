@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { studies, getStudy } from "@/content/work";
+import { relatedForStudy } from "@/content/related";
 import { StudyBlocks } from "@/components/sections/StudyBlocks";
 import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
@@ -68,6 +69,16 @@ export default async function StudyPage({
         <p className="mt-5 max-w-[58ch] text-lede text-text-2">{study.dek}</p>
         {t("languageNote") && (
           <p className="mt-3 text-monosm text-text-3">{t("languageNote")}</p>
+        )}
+        {relatedForStudy[slug] && (
+          <p className="mt-6 max-w-[58ch] text-body text-text-2">
+            <Link
+              href={relatedForStudy[slug].href}
+              className="border-b border-hairline-strong text-text-1"
+            >
+              {relatedForStudy[slug].label} →
+            </Link>
+          </p>
         )}
         <ProjectLinks
           github={study.github}

@@ -1,4 +1,4 @@
-import { NAME, SITE_URL, EDITH_URL } from "@/content/site";
+import { NAME, NAME_VARIANTS, SCHOLAR, SITE_URL, EDITH_URL } from "@/content/site";
 import { studies } from "@/content/work";
 import { essays } from "@/content/writing";
 import { papers } from "@/content/research";
@@ -34,7 +34,10 @@ export function GET() {
 
   const body = `# ${NAME}
 
-> ${NAME} builds quiet systems for loud problems — engineering and applied-AI work, documented as honest case studies with no fabricated metrics. This file maps the site for AI agents and tools; every link resolves to a full page.
+> ${NAME} is a software engineer and researcher who builds quiet systems for loud problems — cloud infrastructure, protocols and applied AI, documented as honest case studies with no fabricated metrics. He publishes papers as ${NAME_VARIANTS[0]} (ORCID: ${SCHOLAR.orcid}). This file maps the site for AI agents and tools; every link resolves to a full page.
+
+- [About ${NAME}](${SITE_URL}/about): Who he is, what he builds and how he works.
+- [Official profiles and links](${SITE_URL}/links): GitHub, LinkedIn, ORCID and the other profiles that are genuinely his.
 
 ## Work
 
@@ -60,7 +63,6 @@ ${research}
 
 ## Optional
 
-- [About](${SITE_URL}/about): Background and how Kevin works.
 - [Contact](${SITE_URL}/contact): Ways to get in touch.
 `;
 

@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { papers, getPaper } from "@/content/research";
+import { relatedForPaper } from "@/content/related";
+import { NAME_VARIANTS } from "@/content/site";
 import { StudyBlocks } from "@/components/sections/StudyBlocks";
 import { ProjectLinks } from "@/components/sections/ProjectLinks";
 import { Reveal } from "@/components/motion/Reveal";
@@ -65,7 +67,20 @@ export default async function PaperPage({
           {paper.domain} · {paper.status}
         </p>
         <h1 className="mt-4 text-display">{paper.title}</h1>
+        <p className="mt-3 text-monosm text-text-3">
+          {[NAME_VARIANTS[0], ...(paper.coAuthors?.map((c) => c.name) ?? [])].join(", ")}
+        </p>
         <p className="mt-5 max-w-[58ch] text-lede text-text-2">{paper.dek}</p>
+        {relatedForPaper[slug] && (
+          <p className="mt-6 max-w-[58ch] text-body text-text-2">
+            <Link
+              href={relatedForPaper[slug].href}
+              className="border-b border-hairline-strong text-text-1"
+            >
+              {relatedForPaper[slug].label} →
+            </Link>
+          </p>
+        )}
         <ProjectLinks
           github={paper.github}
           live={paper.pdf}
