@@ -1,15 +1,15 @@
 {
   "meta": {
     "title": "Kevin Andrew — Software Engineer, Cloud Systems & AI",
-    "description": "Kevin Andrew builds Etch (cryptographic provenance for code) and STEM (masked production database clones), and researches LLM inference scheduling."
+    "description": "Kevin Andrew builds cloud infrastructure, protocols, and applied AI — designed from first principles and shipped end to end."
   },
   "pageMeta": {
     "research": "Papers by Kevin Andrew A on content-blind LLM inference scheduling (ICCCIoT-2026) and Indic knowledge graph population (SPELLL 2026).",
     "studio": "Edith Studio — a small design and engineering practice by Kevin Andrew. Products and AI systems that simply work, built end to end for select clients.",
     "writing": "Essays and notes by Kevin Andrew — on building, becoming, and the gap between who you are and what you're building.",
-    "about": "Kevin Andrew (Kevin Andrew A on papers) is a software engineer and researcher: Etch, STEM, two 2026 papers and the edith developer community.",
+    "about": "Kevin Andrew (Kevin Andrew A on papers) is a software engineer and researcher building cloud systems, protocols and applied AI, and the founder of the edith developer community.",
     "contact": "Get in touch with Kevin Andrew — client work, research, collaborations, or just to say hello. Replies usually within a day.",
-    "work": "Projects by Kevin Andrew: Etch, a provenance protocol for code; STEM, safe production database clones; The Pit, a proving ground for AI agents.",
+    "work": "Work by Kevin Andrew across cloud systems, protocols and applied AI, written up as honest case studies: the problem, the approach and the current state.",
     "aboutTitle": "About Kevin Andrew — Engineer and Researcher"
   },
   "nav": {
